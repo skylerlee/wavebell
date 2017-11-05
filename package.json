@@ -1,0 +1,12 @@
+{
+  "name": "wavebell",
+  "version": "0.0.1",
+  "description": "A javascript voice recorder with realtime waveform",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/skylerlee/wavebell.git"
+  },
+  "author": "skylerlee <skyler.ac.lee@gmail.com>",
+  "license": "MIT"
+}
