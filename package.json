@@ -9,6 +9,9 @@
   },
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "rollup -c"
+  },
   "devDependencies": {
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2"
