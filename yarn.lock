@@ -624,6 +624,10 @@ co@^4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/co/download/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
 
+coffeescript@^2.0.2:
+  version "2.0.2"
+  resolved "http://registry.npm.taobao.org/coffeescript/download/coffeescript-2.0.2.tgz#065702a484b46194b8c7eb08481e6d4dc38b87c9"
+
 color-convert@^1.9.0:
   version "1.9.0"
   resolved "http://registry.npm.taobao.org/color-convert/download/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
