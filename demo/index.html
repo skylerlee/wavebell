@@ -2,8 +2,28 @@
 <html>
 <head>
   <title>WaveBell Demo</title>
+  <style>
+  .range-bar {
+    width: 500px;
+    padding: 2px;
+    border: 1px solid #ccc;
+  }
+  .range-bar .range {
+    height: 4px;
+    background-color: #6c4;
+  }
+  </style>
 </head>
 <body>
+  <p>Click button to start record.</p>
+  <button id="btn">Start</button>
+  <div class="range-bar">
+    <div class="range" id="rng"></div>
+  </div>
   <script src="../dist/wavebell.js"></script>
+  <script>
+  var btn = document.getElementById('btn');
+  var rng = document.getElementById('rng');
+  </script>
 </body>
 </html>
