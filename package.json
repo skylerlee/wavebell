@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint ./lib"
+    "lint": "eslint ./lib",
+    "test": "mocha"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
