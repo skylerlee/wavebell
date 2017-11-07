@@ -1,3 +1,0 @@
---require coffeescript/register
---require chai/register-expect
-test/**/*.spec.coffee
