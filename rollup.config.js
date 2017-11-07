@@ -1,3 +1,5 @@
+'use strict'
+
 import babel from 'rollup-plugin-babel'
 
 export default {
