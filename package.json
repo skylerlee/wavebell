@@ -10,7 +10,7 @@
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c build/rollup.prod.config.js",
+    "build": "rollup -c build/rollup.config.prod.js",
     "lint": "eslint ./lib",
     "test": "node test/launch.js"
   },
