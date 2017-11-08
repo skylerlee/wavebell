@@ -8,7 +8,7 @@ import babel from 'rollup-plugin-babel'
 export default Object.assign(baseConfig, {
   input: './test/**/*.spec.coffee',
   output: {
-    file: './dist/specs.js',
+    file: './test_gen/specs.bundle.js',
     name: 'specs',
     format: 'umd'
   },
