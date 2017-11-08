@@ -6,7 +6,10 @@ import coffee from 'rollup-plugin-coffee-script'
 import babel from 'rollup-plugin-babel'
 
 export default Object.assign(baseConfig, {
-  input: './test/**/*.spec.coffee',
+  input: [
+    './test/bootstrap.js',
+    './test/**/*.spec.coffee'
+  ],
   output: {
     file: './test_gen/specs.bundle.js',
     name: 'specs',
