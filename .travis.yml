@@ -1,4 +1,7 @@
 language: node_js
+node_js:
+  - "8"
+  - "7"
 dist: trusty
 addons:
   chrome: stable
@@ -13,4 +16,5 @@ before_script:
   - export CHROME_PATH="$(pwd)/chrome-linux/chrome"
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # wait for xvfb to boot
-script: yarn run test
+script:
+  - yarn run test
