@@ -12,8 +12,8 @@
   "scripts": {
     "build:prod": "rollup -c build/rollup.config.prod.js",
     "build:test": "rollup -c build/rollup.config.test.js",
-    "build": "run-s build:prod",
     "lint": "eslint ./lib",
+    "dist": "run-s lint build:prod",
     "test:launch": "node test/launch.js",
     "test": "run-s build:test test:launch"
   },
