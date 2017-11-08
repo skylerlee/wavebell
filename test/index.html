@@ -11,7 +11,9 @@
   <script src="../node_modules/chai/chai.js"></script>
   <script>
     window.expect = chai.expect;
-    window.onload = function () { mocha.run(); };
+    window.onload = function () {
+      specs.register(mocha.run());
+    };
     mocha.setup('bdd');
   </script>
   <script src="../test_gen/specs.bundle.js"></script>
