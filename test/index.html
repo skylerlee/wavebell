@@ -8,7 +8,11 @@
 <body>
   <div id="mocha"></div>
   <script src="../node_modules/mocha/mocha.js"></script>
-  <script>mocha.setup('bdd');</script>
-  <script>mocha.run();</script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script>
+    window.expect = chai.expect;
+    window.onload = function () { mocha.run(); };
+    mocha.setup('bdd');
+  </script>
 </body>
 </html>
