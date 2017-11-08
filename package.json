@@ -11,9 +11,11 @@
   "license": "MIT",
   "scripts": {
     "build:prod": "rollup -c build/rollup.config.prod.js",
+    "build:test": "rollup -c build/rollup.config.test.js",
     "build": "run-s build:prod",
     "lint": "eslint ./lib",
-    "test": "node test/launch.js"
+    "test:launch": "node test/launch.js",
+    "test": "run-s build:test test:launch"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
