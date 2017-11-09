@@ -4,10 +4,25 @@
 const ws = require('ws')
 const launcher = require('chrome-launcher')
 
+let chromeOpts = {
+  chromeFlags: ['--allow-file-access-from-files'],
+  startingUrl: `file://${__dirname}/index.html`
+}
+
 let server = new ws.Server({
   port: 9020
 })
-let browser = null
+
+let browser = {
+  inst: null,
+  open () {
+    launcher.launch(chromeOpts).then(chrome => this.inst = chrome)
+  },
+  close () {
+    this.inst.kill()
+    this.inst = null
+  }
+}
 
 let handler = {
   init (socket) {
@@ -25,23 +40,19 @@ let handler = {
   },
   passed (msg) {
     console.log('Test passed')
+    process.exitCode = 0
     this.done()
   },
   failed (msg) {
     console.log('Test failed')
+    process.exitCode = 1
     this.done()
   },
   done () {
-    browser.kill()
+    browser.close()
   },
   noop () {}
 }
 
 server.on('connection', socket => handler.init(socket))
-
-launcher.launch({
-  chromeFlags: ['--allow-file-access-from-files'],
-  startingUrl: `file://${__dirname}/index.html`
-}).then(chrome => {
-  browser = chrome
-})
+server.on('listening', () => browser.open())
