@@ -4,12 +4,33 @@
  * found in the LICENSE file.
  */
 
-function register (runner) {
+let origSend = WebSocket.prototype.send
+
+WebSocket.prototype.send = function (msg) {
+  if (typeof msg === 'object') {
+    msg = JSON.stringify(msg)
+  }
+  origSend.call(this, msg)
+}
+
+function register (mocha) {
   // establish connection
   let socket = new WebSocket('ws://localhost:9020')
-
-  runner.on('end', () => {
-    console.log(runner)
+  socket.addEventListener('open', () => {
+    let runner = mocha.run()
+    runner.on('end', () => {
+      if (runner.failures === 0) {
+        // test passed
+        socket.send({
+          type: 'passed'
+        })
+      } else {
+        // test failed
+        socket.send({
+          type: 'failed'
+        })
+      }
+    })
   })
 }
 
