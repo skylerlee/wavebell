@@ -5,6 +5,9 @@
  */
 
 function register (runner) {
+  // establish connection
+  let socket = new WebSocket('ws://localhost:9020')
+
   runner.on('end', () => {
     console.log(runner)
   })
