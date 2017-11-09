@@ -9,7 +9,7 @@ let server = new ws.Server({
 })
 let handler = {
   init (socket) {
-    console.log('Test runner start')
+    console.log('Test runner started')
     socket.on('close', () => this.destroy())
     socket.on('message', data => {
       let msg = JSON.parse(data)
