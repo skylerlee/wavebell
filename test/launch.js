@@ -10,9 +10,16 @@ let server = new ws.Server({
 let handler = {
   init (socket) {
     console.log('Test runner start')
-    socket.on('message', msg => {
-      (this[msg.type] || this.noop).call(this, msg)
+    socket.on('close', () => this.destroy())
+    socket.on('message', data => {
+      let msg = JSON.parse(data)
+      let slot = this[msg.type] || this.noop
+      slot.call(this, msg)
     })
+  },
+  destroy () {
+    console.log('Test runner terminated')
+    server.close()
   },
   passed (msg) {
     console.log('Test passed')
