@@ -15,11 +15,16 @@ let server = new ws.Server({
 
 let browser = {
   inst: null,
+  get silent () {
+    return process.env.NODE_ENV === 'testing'
+  },
   open () {
     launcher.launch(chromeOpts).then(chrome => this.inst = chrome)
   },
   close () {
-    this.inst.kill()
+    if (this.silent) {
+      this.inst.kill()
+    }
     this.inst = null
   }
 }
