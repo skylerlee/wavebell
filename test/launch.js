@@ -2,11 +2,17 @@
 'use strict'
 
 const ws = require('ws')
+const chalk = require('chalk')
 const launcher = require('chrome-launcher')
 
+// chrome launcher options
 let chromeOpts = {
   chromeFlags: ['--allow-file-access-from-files'],
   startingUrl: `file://${__dirname}/index.html`
+}
+
+function log (text, style) {
+  console.log(chalk[style](text))
 }
 
 let server = new ws.Server({
@@ -33,9 +39,9 @@ let browser = {
   }
 }
 
+// browser message handler
 let handler = {
   init (socket) {
-    console.log('Test runner started')
     socket.on('close', () => this.destroy())
     socket.on('message', data => {
       let msg = JSON.parse(data)
@@ -44,16 +50,17 @@ let handler = {
     })
   },
   destroy () {
-    console.log('Test runner terminated')
+    log('Test runner terminated', 'bold')
     server.close()
   },
+  started (msg) {
+    log('Test runner started', 'bold')
+  },
   passed (msg) {
-    console.log('Test passed')
     process.exitCode = 0
     this.done()
   },
   failed (msg) {
-    console.log('Test failed')
     process.exitCode = 1
     this.done()
   },

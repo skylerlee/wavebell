@@ -4,6 +4,7 @@
  * found in the LICENSE file.
  */
 
+// Add auto object serialization
 let origSend = WebSocket.prototype.send
 
 WebSocket.prototype.send = function (msg) {
@@ -18,6 +19,9 @@ function register (mocha) {
   let socket = new WebSocket('ws://localhost:9020')
   socket.addEventListener('open', () => {
     let runner = mocha.run()
+    socket.send({
+      type: 'started'
+    })
     runner.on('end', () => {
       if (runner.failures === 0) {
         // test passed
