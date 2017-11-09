@@ -47,15 +47,10 @@ let handler = {
   destroy () {
     server.close()
   },
-  passed (msg) {
-    process.exitCode = 0
-    this.done()
-  },
-  failed (msg) {
-    process.exitCode = 1
-    this.done()
-  },
-  done () {
+  done (msg) {
+    if (msg.failures > 0) {
+      process.exitCode = 1
+    }
     browser.close()
   },
   noop () {}

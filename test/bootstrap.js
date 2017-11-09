@@ -21,17 +21,10 @@ function register (mocha) {
     // start runner
     let runner = mocha.run()
     runner.on('end', () => {
-      if (runner.failures === 0) {
-        // test passed
-        socket.send({
-          type: 'passed'
-        })
-      } else {
-        // test failed
-        socket.send({
-          type: 'failed'
-        })
-      }
+      socket.send({
+        type: 'done',
+        failures: runner.failures
+      })
     })
   })
 }
