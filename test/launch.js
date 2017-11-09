@@ -2,17 +2,12 @@
 'use strict'
 
 const ws = require('ws')
-const chalk = require('chalk')
 const launcher = require('chrome-launcher')
 
 // chrome launcher options
 let chromeOpts = {
   chromeFlags: ['--allow-file-access-from-files'],
   startingUrl: `file://${__dirname}/index.html`
-}
-
-function log (text, style) {
-  console.log(chalk[style](text))
 }
 
 let server = new ws.Server({
@@ -50,11 +45,7 @@ let handler = {
     })
   },
   destroy () {
-    log('Test runner terminated', 'bold')
     server.close()
-  },
-  started (msg) {
-    log('Test runner started', 'bold')
   },
   passed (msg) {
     process.exitCode = 0

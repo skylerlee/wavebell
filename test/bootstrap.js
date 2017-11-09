@@ -18,10 +18,8 @@ function register (mocha) {
   // establish connection
   let socket = new WebSocket('ws://localhost:9020')
   socket.addEventListener('open', () => {
+    // start runner
     let runner = mocha.run()
-    socket.send({
-      type: 'started'
-    })
     runner.on('end', () => {
       if (runner.failures === 0) {
         // test passed
