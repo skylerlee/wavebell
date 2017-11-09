@@ -7,6 +7,8 @@ const launcher = require('chrome-launcher')
 let server = new ws.Server({
   port: 9020
 })
+let browser = null
+
 let handler = {
   init (socket) {
     console.log('Test runner started')
@@ -23,9 +25,14 @@ let handler = {
   },
   passed (msg) {
     console.log('Test passed')
+    this.done()
   },
   failed (msg) {
     console.log('Test failed')
+    this.done()
+  },
+  done () {
+    browser.kill()
   },
   noop () {}
 }
@@ -35,4 +42,6 @@ server.on('connection', socket => handler.init(socket))
 launcher.launch({
   chromeFlags: ['--allow-file-access-from-files'],
   startingUrl: `file://${__dirname}/index.html`
+}).then(chrome => {
+  browser = chrome
 })
