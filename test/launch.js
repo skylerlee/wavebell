@@ -19,6 +19,10 @@ let browser = {
     return process.env.NODE_ENV === 'testing'
   },
   open () {
+    if (this.silent) {
+      chromeOpts.chromeFlags = chromeOpts.chromeFlags || []
+      chromeOpts.chromeFlags.push('--headless')
+    }
     launcher.launch(chromeOpts).then(chrome => this.inst = chrome)
   },
   close () {
