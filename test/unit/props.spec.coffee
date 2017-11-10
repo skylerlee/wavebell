@@ -16,3 +16,8 @@ describe 'util/props', ->
       p = props('a')
       expect(p.steps.length).to.equal(1)
       expect(p.steps[0]).to.equal('a')
+
+  describe '.travel', ->
+    it 'should accept function callback as second argument', ->
+      expect(-> props('a').travel(null, (val) -> val)).not.to.throw()
+      expect(-> props('a').travel(null, null)).to.throw(TypeError)
