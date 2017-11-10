@@ -31,6 +31,10 @@ describe 'util/props', ->
         d: 'value2'
       },
       e: 10
+      f: [2, 4, 6, {
+        g: 'value3',
+        h: [1, 3, 5]
+      }]
     }
 
     it 'should get correct value', ->
@@ -39,6 +43,14 @@ describe 'util/props', ->
       expect(props('e').from(obj)).to.equal(10)
       expect(props('a.b').from(obj)).to.equal(obj.a.b)
       expect(props('a').from(obj)).to.equal(obj.a)
+
+    it 'should also apply for array', ->
+      expect(props('f.0').from(obj)).to.equal(2)
+      expect(props('f.1').from(obj)).to.equal(4)
+      expect(props('f.3.g').from(obj)).to.equal('value3')
+      expect(props('f.3.h.length').from(obj)).to.equal(3)
+      expect(props('f.3.h.2').from(obj)).to.equal(5)
+      expect(props('f.3.h').from(obj)).to.equal(obj.f[3].h)
 
     it 'should get undefined otherwise', ->
       expect(props('a.b.d').from(obj)).to.be.undefined
