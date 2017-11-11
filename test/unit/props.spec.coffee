@@ -63,6 +63,27 @@ describe 'util/props', ->
       expect(props('.').from(obj)).to.be.undefined
       expect(props('..').from(obj)).to.be.undefined
 
+  describe '.or', ->
+    obj = {
+      a: 'value1',
+      b: undefined,
+      c: {
+        d: 10,
+        e: undefined
+        f: [2, 4, 6]
+      }
+    }
+
+    it 'should set a default value for `from` method', ->
+      expect(props('a').or('').from(obj)).to.equal('value1')
+      expect(props('b').or('').from(obj)).to.be.undefined
+      expect(props('h').or('').from(obj)).to.equal('')
+      expect(props('c.d').or('').from(obj)).to.equal(10)
+      expect(props('c.e').or('').from(obj)).to.be.undefined
+      expect(props('c.h').or('').from(obj)).to.equal('')
+      expect(props('c.f.1').or('').from(obj)).to.equal(4)
+      expect(props('c.f.3').or(0).from(obj)).to.equal(0)
+
   plain = {
     a: {
       b: 'value1'
