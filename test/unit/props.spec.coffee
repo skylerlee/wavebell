@@ -62,3 +62,25 @@ describe 'util/props', ->
       expect(props('a.b.').from(obj)).to.be.undefined
       expect(props('.').from(obj)).to.be.undefined
       expect(props('..').from(obj)).to.be.undefined
+
+  plain = {
+    a: {
+      b: 'value1'
+    },
+    c: 0,
+    d: null,
+    e: undefined
+  }
+
+  describe '.hadBy', ->
+    it 'should meet basic functions', ->
+      expect(props('a.b').hadBy(plain)).to.be.true
+      expect(props('a').hadBy(plain)).to.be.true
+      expect(props('c').hadBy(plain)).to.be.true
+      expect(props('d').hadBy(plain)).to.be.true
+      expect(props('e').hadBy(plain)).to.be.true
+      expect(props('h').hadBy(plain)).to.be.false
+      expect(props('a.b.c').hadBy(plain)).to.be.false
+      expect(props('c.f').hadBy(plain)).to.be.false
+      expect(props('d.f').hadBy(plain)).to.be.false
+      expect(props('e.f').hadBy(plain)).to.be.false
