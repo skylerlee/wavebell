@@ -84,3 +84,16 @@ describe 'util/props', ->
       expect(props('c.f').hadBy(plain)).to.be.false
       expect(props('d.f').hadBy(plain)).to.be.false
       expect(props('e.f').hadBy(plain)).to.be.false
+
+  describe '.ownedBy', ->
+    it 'should meet basic functions', ->
+      expect(props('a.b').ownedBy(plain)).to.be.true
+      expect(props('a').ownedBy(plain)).to.be.true
+      expect(props('c').ownedBy(plain)).to.be.true
+      expect(props('d').ownedBy(plain)).to.be.true
+      expect(props('e').ownedBy(plain)).to.be.true
+      expect(props('h').ownedBy(plain)).to.be.false
+      expect(props('a.b.c').ownedBy(plain)).to.be.false
+      expect(props('c.f').ownedBy(plain)).to.be.false
+      expect(props('d.f').ownedBy(plain)).to.be.false
+      expect(props('e.f').ownedBy(plain)).to.be.false
