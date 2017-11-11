@@ -72,6 +72,20 @@ describe 'util/props', ->
     e: undefined
   }
 
+  # Basic JS OOP
+  Base = () ->
+    this.a = 'value1'
+  Base.prototype.methodB = () ->
+    return 'value2'
+
+  # Proto inheritance
+  Derived = () ->
+    Base.call(this)
+    this.c = 'value3'
+  Derived.prototype = Object.create(Base.prototype)
+  Derived.prototype.methodD = () ->
+    return 'value3'
+
   describe '.hadBy', ->
     it 'should meet basic functions', ->
       expect(props('a.b').hadBy(plain)).to.be.true
@@ -85,6 +99,16 @@ describe 'util/props', ->
       expect(props('d.f').hadBy(plain)).to.be.false
       expect(props('e.f').hadBy(plain)).to.be.false
 
+    it 'should check for owned or inherited properties', ->
+      base = new Base()
+      derived = new Derived()
+      expect(props('a').hadBy(base)).to.be.true
+      expect(props('methodB').hadBy(base)).to.be.true
+      expect(props('a').hadBy(derived)).to.be.true
+      expect(props('c').hadBy(derived)).to.be.true
+      expect(props('methodB').hadBy(derived)).to.be.true
+      expect(props('methodD').hadBy(derived)).to.be.true
+
   describe '.ownedBy', ->
     it 'should meet basic functions', ->
       expect(props('a.b').ownedBy(plain)).to.be.true
@@ -97,3 +121,13 @@ describe 'util/props', ->
       expect(props('c.f').ownedBy(plain)).to.be.false
       expect(props('d.f').ownedBy(plain)).to.be.false
       expect(props('e.f').ownedBy(plain)).to.be.false
+
+    it 'should check for owned properties only', ->
+      base = new Base()
+      derived = new Derived()
+      expect(props('a').ownedBy(base)).to.be.true
+      expect(props('methodB').ownedBy(base)).to.be.false
+      expect(props('a').ownedBy(derived)).to.be.true
+      expect(props('c').ownedBy(derived)).to.be.true
+      expect(props('methodB').ownedBy(derived)).to.be.false
+      expect(props('methodD').ownedBy(derived)).to.be.false
