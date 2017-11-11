@@ -44,7 +44,13 @@ let handler = {
     })
   },
   destroy () {
-    server.close()
+    let delay = 2000
+    setTimeout(() => {
+      // close server if not reconnected
+      if (server.clients.size === 0) {
+        server.close()
+      }
+    }, delay)
   },
   done (msg) {
     if (msg.failures > 0) {
