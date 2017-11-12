@@ -22,11 +22,22 @@
   <div class="range-bar">
     <div class="range" id="rng"></div>
   </div>
-  <script src="../dist/wavebell.js"></script>
+  <script src="/dist/wavebell.js"></script>
   <script>
+  var bell = new WaveBell();
+
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
-  var bell = new WaveBell();
+
+  btn.addEventListener('click', function (e) {
+    if (bell.state === 'inactive') {
+      bell.start();
+      btn.innerText = 'Stop';
+    } else {
+      bell.stop();
+      btn.innerText = 'Start';
+    }
+  });
   </script>
 </body>
 </html>
