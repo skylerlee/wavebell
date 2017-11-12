@@ -37,6 +37,7 @@
     "npm-run-all": "^4.1.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.50.0",
+    "rollup-plugin-alias": "^1.4.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-coffee-script": "^2.0.0",
     "rollup-plugin-multi-entry": "^2.0.2",
