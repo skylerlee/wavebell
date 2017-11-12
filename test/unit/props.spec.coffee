@@ -1,4 +1,4 @@
-import props from '../../lib/util/props'
+import props from '@/util/props'
 
 describe 'util/props', ->
   it 'should accept a string argument', ->
