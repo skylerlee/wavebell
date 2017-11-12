@@ -7,7 +7,8 @@ export default {
   output: {
     file: './dist/wavebell.js',
     name: 'WaveBell',
-    format: 'umd'
+    format: 'umd',
+    sourcemap: true
   },
   plugins: [
     babel()

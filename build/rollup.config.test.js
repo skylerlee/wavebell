@@ -13,7 +13,8 @@ export default Object.assign(baseConfig, {
   output: {
     file: './test_gen/specs.bundle.js',
     name: 'specs',
-    format: 'umd'
+    format: 'umd',
+    sourcemap: true
   },
   plugins: [
     multiEntry(),
