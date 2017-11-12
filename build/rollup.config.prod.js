@@ -1,7 +1,6 @@
 'use strict'
 
-import path from 'path'
-import alias from 'rollup-plugin-alias'
+import { alias } from './project.config'
 import babel from 'rollup-plugin-babel'
 
 export default {
@@ -13,9 +12,7 @@ export default {
     sourcemap: true
   },
   plugins: [
-    alias({
-      '@': path.resolve(__dirname, '../lib')
-    }),
+    alias(),
     babel()
   ]
 }
