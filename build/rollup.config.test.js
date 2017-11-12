@@ -1,6 +1,5 @@
 'use strict'
 
-import baseConfig from './rollup.config.base'
 import multiEntry from 'rollup-plugin-multi-entry'
 import coffee from 'rollup-plugin-coffee-script'
 import babel from 'rollup-plugin-babel'
