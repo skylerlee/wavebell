@@ -99,6 +99,12 @@ describe 'util/emitter', ->
       e.emit('foo')
       expect(called).to.be.true
 
+    it 'should support methods chaining', ->
+      num = 0
+      e = new Emitter()
+      e.on('foo', -> num++).on('bar', -> num++).emit('foo').emit('bar')
+      expect(num).to.equal(2)
+
     it 'should ignore emitting unregistered event', ->
       called = false
       e = new Emitter()
