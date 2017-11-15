@@ -59,3 +59,34 @@ describe 'util/emitter', ->
       expect(Object.keys(e.handlerMap).length).to.equal(1)
       e.off('foo')
       expect(Object.keys(e.handlerMap).length).to.equal(0)
+
+    it 'should ignore removing handler of unregistered event', ->
+      e = new Emitter()
+      e.on('foo', callback1 = ->)
+      e.on('foo', callback2 = ->)
+      expect(e.handlerMap['foo'].length).to.equal(2)
+      e.off('bar', callback1)
+      expect(e.handlerMap['foo'].length).to.equal(2)
+      e.off('bar')
+      expect(e.handlerMap['foo'].length).to.equal(2)
+
+    it 'should ignore removing handler if it is not found', ->
+      e = new Emitter()
+      e.on('foo', callback1 = ->)
+      e.on('foo', callback2 = ->)
+      expect(e.handlerMap['foo'].length).to.equal(2)
+      e.off('foo', callback3 = ->)
+      expect(e.handlerMap['foo'].length).to.equal(2)
+
+    it 'should remove the handler array if it is empty', ->
+      e = new Emitter()
+      e.on('foo', callback1 = ->)
+      e.on('foo', callback2 = ->)
+      e.on('bar', ->)
+      e.on('bar', ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(2)
+      e.off('foo', callback1)
+      e.off('foo', callback2)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      e.off('bar')
+      expect(Object.keys(e.handlerMap).length).to.equal(0)
