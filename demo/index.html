@@ -29,18 +29,28 @@
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
 
-  btn.addEventListener('click', function (e) {
-    if (bell.state === 'closed') {
-      bell.open();
-      return;
-    }
+  function toggle () {
     if (bell.state === 'inactive') {
-      bell.start();
-      btn.innerText = 'Stop';
+      bell.start(1000 / 25);
     } else {
       bell.stop();
-      btn.innerText = 'Start';
     }
+  }
+
+  btn.addEventListener('click', function (e) {
+    if (bell.state === 'closed') {
+      bell.on('open', toggle);
+      bell.open();
+    } else {
+      toggle();
+    }
+  });
+
+  bell.on('start', function () {
+    btn.innerText = 'Stop';
+  });
+  bell.on('stop', function () {
+    btn.innerText = 'Start';
   });
   </script>
 </body>
