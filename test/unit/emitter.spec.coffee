@@ -37,3 +37,25 @@ describe 'util/emitter', ->
       expect(e.handlerMap['foo'].length).to.equal(2)
       expect(e.handlerMap['foo'][0]).to.equal(callback1)
       expect(e.handlerMap['foo'][1]).to.equal(callback2)
+
+  describe '#off', ->
+    it 'should remove an event handler if it is found', ->
+      e = new Emitter()
+      e.on('foo', callback1 = ->)
+      e.on('foo', callback2 = ->)
+      e.on('foo', callback3 = ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      expect(e.handlerMap['foo'].length).to.equal(3)
+      e.off('foo', callback2)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      expect(e.handlerMap['foo'].length).to.equal(2)
+      expect(e.handlerMap['foo'][0]).to.equal(callback1)
+      expect(e.handlerMap['foo'][1]).to.equal(callback3)
+
+    it 'should remove all handlers if called with only one argument', ->
+      e = new Emitter()
+      e.on('foo', ->)
+      e.on('foo', ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      e.off('foo')
+      expect(Object.keys(e.handlerMap).length).to.equal(0)
