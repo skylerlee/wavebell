@@ -94,17 +94,17 @@ describe 'util/props', ->
   }
 
   # Basic JS OOP
-  Base = () ->
+  Base = ->
     this.a = 'value1'
-  Base.prototype.methodB = () ->
+  Base.prototype.methodB = ->
     return 'value2'
 
   # Proto inheritance
-  Derived = () ->
+  Derived = ->
     Base.call(this)
     this.c = 'value3'
   Derived.prototype = Object.create(Base.prototype)
-  Derived.prototype.methodD = () ->
+  Derived.prototype.methodD = ->
     return 'value3'
 
   describe '.hadBy', ->
