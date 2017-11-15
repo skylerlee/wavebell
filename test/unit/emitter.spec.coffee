@@ -129,3 +129,32 @@ describe 'util/emitter', ->
       e.emit('foo', 'foo data')
       e.emit('bar', 1, 'bar data', true, data)
       e.emit('baz')
+
+    it 'should call event handler at correct times', ->
+      counter = {
+        num: 0,
+        acc: -> @num++,
+        reset: -> @num = 0
+      }
+      e = new Emitter()
+      e.on('foo', callback1 = -> counter.acc())
+      e.on('foo', callback2 = -> counter.acc())
+      e.emit('foo')
+      expect(counter.num).to.equal(2)
+      counter.reset()
+      e.on('bar', -> counter.acc())
+      e.emit('bar')
+      expect(counter.num).to.equal(1)
+      counter.reset()
+      e.emit('foo').emit('bar')
+      expect(counter.num).to.equal(3)
+      counter.reset()
+      e.off('foo', callback1)
+      e.off('bar')
+      e.emit('foo').emit('bar')
+      expect(counter.num).to.equal(1)
+      counter.reset()
+      e.off('foo', callback2)
+      e.emit('foo').emit('bar')
+      expect(counter.num).to.equal(0)
+      counter.reset()
