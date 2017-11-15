@@ -18,3 +18,20 @@ describe 'util/emitter', ->
       expect(-> e.on('foo', 10)).to.throw(TypeError)
       expect(-> e.on('foo', 'callback')).to.throw(TypeError)
 
+    it 'should create a handler array when event not registered', ->
+      e = new Emitter()
+      expect(Object.keys(e.handlerMap).length).to.equal(0)
+      e.on('foo', ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      expect(e.handlerMap['foo'] instanceof Array).to.be.true
+      e.on('bar', ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(2)
+      expect(e.handlerMap['bar'] instanceof Array).to.be.true
+
+    it 'should append an event handler otherwise', ->
+      e = new Emitter()
+      expect(Object.keys(e.handlerMap).length).to.equal(0)
+      e.on('foo', ->)
+      e.on('foo', ->)
+      expect(Object.keys(e.handlerMap).length).to.equal(1)
+      expect(e.handlerMap['foo'].length).to.equal(2)
