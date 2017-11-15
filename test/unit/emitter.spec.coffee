@@ -31,7 +31,9 @@ describe 'util/emitter', ->
     it 'should append an event handler otherwise', ->
       e = new Emitter()
       expect(Object.keys(e.handlerMap).length).to.equal(0)
-      e.on('foo', ->)
-      e.on('foo', ->)
+      e.on('foo', callback1 = ->)
+      e.on('foo', callback2 = ->)
       expect(Object.keys(e.handlerMap).length).to.equal(1)
       expect(e.handlerMap['foo'].length).to.equal(2)
+      expect(e.handlerMap['foo'][0]).to.equal(callback1)
+      expect(e.handlerMap['foo'][1]).to.equal(callback2)
