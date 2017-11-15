@@ -12,12 +12,13 @@
   "scripts": {
     "build:prod": "rollup -c build/rollup.config.prod.js",
     "build:test": "rollup -c build/rollup.config.test.js",
-    "lint": "eslint ./lib",
-    "dist": "run-s lint build:prod",
+    "lint:src": "eslint ./lib",
+    "lint:spec": "coffeelint ./test",
+    "dist": "run-s lint:src build:prod",
     "start": "live-server --open=/demo --watch=demo,dist",
     "test:clean": "rimraf ./test_gen",
     "test:launch": "node test/launch.js",
-    "test": "run-s test:clean build:test test:launch"
+    "test": "run-s test:clean lint:spec build:test test:launch"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
