@@ -90,3 +90,36 @@ describe 'util/emitter', ->
       expect(Object.keys(e.handlerMap).length).to.equal(1)
       e.off('bar')
       expect(Object.keys(e.handlerMap).length).to.equal(0)
+
+  describe '#emit', ->
+    it 'should meet basic functions', ->
+      called = false
+      e = new Emitter()
+      e.on('foo', -> called = true)
+      e.emit('foo')
+      expect(called).to.be.true
+
+    it 'should ignore emitting unregistered event', ->
+      called = false
+      e = new Emitter()
+      e.on('foo', -> called = true)
+      e.emit('bar')
+      expect(called).to.be.false
+
+    it 'should pass correct arguments to handlers', ->
+      e = new Emitter()
+      e.on 'foo', (a) ->
+        expect(a).to.equal('foo data')
+      data = {
+        qux: 'qux data'
+      }
+      e.on 'bar', (a, b, c, d) ->
+        expect(a).to.equal(1)
+        expect(b).to.equal('bar data')
+        expect(c).to.equal(true)
+        expect(d).to.equal(data)
+      e.on 'baz', (a) ->
+        expect(a).to.be.undefined
+      e.emit('foo', 'foo data')
+      e.emit('bar', 1, 'bar data', true, data)
+      e.emit('baz')
