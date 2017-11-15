@@ -30,6 +30,10 @@
   var rng = document.getElementById('rng');
 
   btn.addEventListener('click', function (e) {
+    if (bell.state === 'closed') {
+      bell.open();
+      return;
+    }
     if (bell.state === 'inactive') {
       bell.start();
       btn.innerText = 'Stop';
