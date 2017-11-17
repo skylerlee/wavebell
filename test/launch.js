@@ -44,7 +44,7 @@ let handler = {
     })
   },
   destroy () {
-    let delay = 2000
+    let delay = 1000
     setTimeout(() => {
       // close server if not reconnected
       if (server.clients.size === 0) {
