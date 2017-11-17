@@ -11,3 +11,8 @@ describe 'util/assert', ->
       assertion = assert('a value')
       expect(assertion.to).to.equal(assertion)
       expect(assertion.to).to.deep.equal(assertion)
+
+  describe '.equal', ->
+    it 'should meet basic functions', ->
+      expect(-> assert('value1').to.equal('value1')).not.to.throw()
+      expect(-> assert('value2').to.equal('value0')).to.throw(Error, 'Assertion failed')
