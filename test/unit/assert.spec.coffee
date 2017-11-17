@@ -31,3 +31,20 @@ describe 'util/assert', ->
       expect(-> assert(true).not.to.equal(false)).not.to.throw()
       expect(-> assert(true).not.to.not.equal(true)).not.to.throw()
       expect(-> assert(100).not.not.not.equal(101)).not.to.throw()
+
+  describe '.that', ->
+    it 'should set the custom error to throw', ->
+      expect ->
+        assert(typeof 'value1').that(new TypeError('Wrong type'))
+        .to.equal('number')
+      .to.throw(TypeError, 'Wrong type')
+
+      expect ->
+        assert(typeof 'value1').that(new TypeError('Mismatched type'))
+        .not.to.equal('string')
+      .to.throw(TypeError, 'Mismatched type')
+
+      expect ->
+        assert(typeof 100).that(new TypeError('Bad type'))
+        .to.equal('number')
+      .not.to.throw()
