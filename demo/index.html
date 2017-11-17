@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <title>WaveBell Demo</title>
   <style>
+  .container {
+    width: 500px;
+    margin: 50px auto;
+  }
   .range-bar {
+    box-sizing: border-box;
     width: 500px;
     padding: 2px;
     margin: 15px 0;
@@ -17,10 +22,13 @@
   </style>
 </head>
 <body>
-  <p>Click button to start record.</p>
-  <button id="btn">Start</button>
-  <div class="range-bar">
-    <div class="range" id="rng"></div>
+  <div class="container">
+    <h3>Click button to start record</h3>
+    <button id="btn">Start</button>
+    <span id="txt"></span>
+    <div class="range-bar">
+      <div class="range" id="rng"></div>
+    </div>
   </div>
   <script src="/dist/wavebell.js"></script>
   <script>
@@ -28,6 +36,7 @@
 
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
+  var txt = document.getElementById('txt');
 
   btn.addEventListener('click', function (e) {
     if (bell.state === 'inactive') {
@@ -37,11 +46,18 @@
     }
   });
 
+  bell.on('wave', function (e) {
+    var volume = Math.min(e.value, 1);
+    rng.style.width = (volume * 100) + '%';
+  });
+
   bell.on('start', function () {
     btn.innerText = 'Stop';
+    txt.innerText = 'Please speak loudly!';
   });
   bell.on('stop', function () {
     btn.innerText = 'Start';
+    txt.innerText = 'Have fun!';
   });
   </script>
 </body>
