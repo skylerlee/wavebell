@@ -28,3 +28,8 @@ describe 'util/assert', ->
       expect(-> assert(100).to.not.equal(101)).not.to.throw()
       expect(-> assert({}).to.not.equal({})).not.to.throw()
       expect(-> assert('value2').to.not.equal('value2')).to.throw()
+
+    it 'should work multiple times in the chaining', ->
+      expect(-> assert(true).not.to.equal(false)).not.to.throw()
+      expect(-> assert(true).not.to.not.equal(true)).not.to.throw()
+      expect(-> assert(100).not.not.not.equal(101)).not.to.throw()
