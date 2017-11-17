@@ -6,13 +6,11 @@ describe 'util/assert', ->
     expect(assert(true).value).to.equal(true)
     expect(assert(100).value).to.equal(100)
 
-  describe '.to/.when', ->
+  describe '.to', ->
     it 'should continue the chaining', ->
       assertion = assert('a value')
       expect(assertion.to).to.equal(assertion)
       expect(assertion.to).to.deep.equal(assertion)
-      expect(assertion.when).to.equal(assertion)
-      expect(assertion.when).to.deep.equal(assertion)
 
   describe '.equal', ->
     it 'should meet basic functions', ->
