@@ -29,20 +29,11 @@
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
 
-  function toggle () {
+  btn.addEventListener('click', function (e) {
     if (bell.state === 'inactive') {
       bell.start(1000 / 25);
     } else {
       bell.stop();
-    }
-  }
-
-  btn.addEventListener('click', function (e) {
-    if (bell.state === 'closed') {
-      bell.on('open', toggle);
-      bell.open();
-    } else {
-      toggle();
     }
   });
 
