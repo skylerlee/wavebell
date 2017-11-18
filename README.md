@@ -7,7 +7,10 @@ A web audio recorder with visual waveform.
 ## Installation
 
 ```bash
+# Install with npm
 npm install --save wavebell
+# Install with yarn
+yarn add wavebell
 ```
 
 ## Example
