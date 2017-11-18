@@ -29,7 +29,7 @@ bell.on('stop', function () {
 ```
 
 ## Thanks
-* **Jos Dirksen** for his [great blog post](http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound)
+* **Jos Dirksen** for his [great blog post about audio visualization](http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound)
 
 ## License
 The MIT License.
