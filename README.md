@@ -28,6 +28,10 @@ bell.on('stop', function () {
 });
 ```
 
+## Notice
+In Chrome 47 or above, `getUserMedia` requires HTTPS to work.
+So it'd be better to setup ssl for your server.
+
 ## Thanks
 * **Jos Dirksen** for his [great blog post about audio visualization](http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound)
 
