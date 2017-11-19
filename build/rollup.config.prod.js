@@ -1,13 +1,13 @@
 'use strict'
 
-import { alias } from './project.config'
+import { conf, alias } from './project.config'
+import minify from './minify'
 import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
 
 export default {
-  input: './lib/wavebell.js',
+  input: conf.main,
   output: {
-    file: './dist/wavebell.js',
+    file: conf.dest,
     name: 'WaveBell',
     format: 'umd',
     sourcemap: true
@@ -15,8 +15,8 @@ export default {
   plugins: [
     alias(),
     babel(),
-    uglify({
-      mangle: { properties: true }
+    minify(conf.dest, {
+      sourceMap: true
     })
   ]
 }
