@@ -40,6 +40,13 @@ function getMinFileName (name) {
   return path.join(props.dir, minName)
 }
 
+/**
+ * rollup minify plugin
+ * This plugin minifies the input file using uglify-js. It's created as a helper
+ * to generate a minified bundle without touch the rollup env config.
+ * @param {string} input - the file to minify
+ * @param {object} option - minify option
+ */
 export default function minify (input, option = {}) {
   let minFile = getMinFileName(input)
   let mapFile = minFile + '.map'
@@ -51,6 +58,7 @@ export default function minify (input, option = {}) {
   }
   return {
     name: 'minify',
+    // hook onwrite phase
     onwrite () {
       readFile(input).then(source => {
         return uglify.minify(source, defaultOptions)
