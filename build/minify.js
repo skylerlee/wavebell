@@ -40,6 +40,12 @@ function getMinFileName (name) {
   return path.join(props.dir, minName)
 }
 
+function createFileWrap (name, content) {
+  let file = {}
+  file[name] = content
+  return file
+}
+
 /**
  * rollup minify plugin
  * This plugin minifies the input file using uglify-js. It's created as a helper
@@ -61,7 +67,8 @@ export default function minify (input, option = {}) {
     // hook onwrite phase
     onwrite () {
       readFile(input).then(source => {
-        return uglify.minify(source, defaultOptions)
+        let file = createFileWrap(path.basename(input), source)
+        return uglify.minify(file, defaultOptions)
       }).then(minified => {
         writeFile(minFile, minified.code)
         if (minified.map) {
