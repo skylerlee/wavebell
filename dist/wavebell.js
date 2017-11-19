@@ -1,2 +1,561 @@
-!function(t,n){"object"==typeof exports&&"undefined"!=typeof module?module.t=n():"function"==typeof define&&define.n?define(n):t.e=n()}(this,function(){"use strict";function t(t){return new c(t)}function n(t){if("string"!=typeof t)throw new TypeError(t+" is not a string");return new w(t)}function e(){return function(t){if(n("navigator.mediaDevices.getUserMedia").i(window))return n("navigator.mediaDevices").from(window).r(t);var e=navigator.r||navigator.u||navigator.o||navigator.s;if(!e)throw new Error("getUserMedia is not supported by this browser");return new Promise(function(n,i){e(t,n,i)})}({f:!0,c:!1})}function i(t,n){return new Error("Failed to execute '"+n+"' on 'Recorder':\nThe Recorder's state is '"+t.a+"'.")}!function(){function t(t){this.h=t}function n(n){function e(r,u){try{var o=n[r](u),s=o.h;s instanceof t?Promise.v(s.h).l(function(t){e("next",t)},function(t){e("throw",t)}):i(o.y?"return":"normal",o.h)}catch(t){i("throw",t)}}function i(t,n){switch(t){case"return":r.v({h:n,y:!0});break;case"throw":r.w(n);break;default:r.v({h:n,y:!1})}(r=r.d)?e(r.p,r.k):u=null}var r,u;this.b=function(t,n){return new Promise(function(i,o){var s={p:t,k:n,v:i,w:o,d:null};u?u=u.d=s:(r=u=s,e(t,n))})},"function"!=typeof n.g&&(this.g=void 0)}"function"==typeof Symbol&&Symbol.m&&(n.prototype[Symbol.m]=function(){return this}),n.prototype.d=function(t){return this.b("next",t)},n.prototype.j=function(t){return this.b("throw",t)},n.prototype.g=function(t){return this.b("return",t)}}();var r=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")},u=function(){function t(t,n){for(var e=0;e<n.length;e++){var i=n[e];i.O=i.O||!1,i.T=!0,"value"in i&&(i.x=!0),Object.defineProperty(t,i.p,i)}}return function(n,e,i){return e&&t(n.prototype,e),i&&t(n,i),n}}(),o=function(t,n){if("function"!=typeof n&&null!==n)throw new TypeError("Super expression must either be null or a function, not "+typeof n);t.prototype=Object.create(n&&n.prototype,{constructor:{h:t,O:!1,x:!0,T:!0}}),n&&(Object.setPrototypeOf?Object.setPrototypeOf(t,n):t.__proto__=n)},s=function(t,n){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!n||"object"!=typeof n&&"function"!=typeof n?t:n},f=function(){function t(){r(this,t),this.S={}}return u(t,[{p:"on",h:function(t,n){if("string"!=typeof t)throw new TypeError(t+" is not a string");if("function"!=typeof n)throw new TypeError(n+" is not a function");var e=this.S,i=e[t]=e[t]||[];return-1===i.indexOf(n)&&i.push(n),this}},{p:"off",h:function(t,n){if(void 0===n)return delete this.S[t],this;var e=this.S[t];if(e){var i=e.indexOf(n);i>=0&&e.splice(i,1),0===e.length&&this.A(t)}return this}},{p:"emit",h:function(t){var n=function(t,n){return Array.prototype.slice.call(t,n)}(arguments,1),e=this.S[t];if(e)for(var i=0,r=e.length;i<r;i++)e[i].apply(void 0,n);return this}}]),t}(),c=function(){function t(n){r(this,t),this.h=n,this.B=!1,this.P=new Error("Assertion failed")}return u(t,[{p:"that",h:function(t){return this.P=t,this}},{p:"equal",h:function(t){if(t===this.h===this.B)throw this.P}},{p:"to",R:function(){return this}},{p:"not",R:function(){return this.B=!this.B,this}}]),t}(),a=window.D||window.M,h=null,l=function(){function t(){r(this,t)}return u(t,[{p:"context",R:function(){return h||(h=new a),h}}]),t}(),v=function(t){function n(t,e){r(this,n);var i=s(this,(n.__proto__||Object.getPrototypeOf(n)).call(this));return i.U=t,i.C=e||{_:2048,q:.3},i.source=null,i.z=i.F(i.C),i}return o(n,l),u(n,[{p:"init",h:function(t){var n=this,e=this.G.V();e._=t._,e.q=t.q;var i=this.G.H(0,1,1);return i.I=function(t){"recording"===n.U.a&&n.J(t)},e.K(i),i.K(this.G.L),e}},{p:"pipe",h:function(t){this.source=this.G.N(t),this.source.K(this.z)}},{p:"cutoff",h:function(){this.source.Q(this.z),this.source=null}},{p:"_processData",h:function(t){var n=new Uint8Array(this.z.W);this.z.X(n);var e=this.Y(n);this.U.Z("wave",{h:e})}},{p:"_calcAvgVolume",h:function(t){for(var n=0,e=t.length,i=0;i<e;i++)n+=t[i];return n/e}}]),n}(),y=Object.prototype.hasOwnProperty,w=function(){function t(n){r(this,t),this.$=n.split("."),this.tt=void 0}return u(t,[{p:"travel",h:function(t,n){if("function"!=typeof n)throw new TypeError(n+" is not a function");for(var e=this.$.length,i=0,r=this.$[i];n(t,r)&&i<e;)t=t[r],r=this.$[++i];return{nt:i,h:t}}},{p:"or",h:function(t){return this.tt=t,this}},{p:"from",h:function(t){var n=this.et(t,function(t,n){return null!=t&&n in Object(t)});return n.nt===this.$.length?n.h:this.tt}},{p:"hadBy",h:function(t){return this.et(t,function(t,n){return null!=t&&n in Object(t)}).nt===this.$.length}},{p:"ownedBy",h:function(t){return this.et(t,function(t,n){return null!=t&&y.call(t,n)}).nt===this.$.length}}]),t}(),d=function(n){function c(t){r(this,c);var n=s(this,(c.__proto__||Object.getPrototypeOf(c)).call(this));return n.C=t||{it:"audio/webm",rt:96e3},n.ut=null,n.ot=null,n.st=new v(n),n}return o(c,f),u(c,[{p:"open",h:function(){var t=this;return e().l(function(n){t.ut=new MediaRecorder(n,t.C);["error","pause","resume","start","stop"].map(function(n){t.ut.ft(n,function(e){return t.Z(n,e)})}),t.ut.ft("dataavailable",function(n){t.ot.push(n.ct)}),t.st.at(n)})}},{p:"close",h:function(){this.st.ht(),this.ut=null,this.ot=null}},{p:"start",h:function(n){var e=this;t(this.a).yt(i(this,"start")).vt.lt("inactive"),this.ot=[],this.wt?this.ut.dt(n):this.pt().l(function(){e.ut.dt(n)})}},{p:"stop",h:function(){t(this.a).yt(i(this,"stop")).vt.kt.lt("inactive"),this.ut.bt()}},{p:"pause",h:function(){t(this.a).yt(i(this,"pause")).vt.lt("recording"),this.ut.gt()}},{p:"resume",h:function(){t(this.a).yt(i(this,"resume")).vt.lt("paused"),this.ut.mt()}},{p:"state",R:function(){return null===this.ut?"inactive":this.ut.a}},{p:"ready",R:function(){return null!==this.ut}},{p:"result",R:function(){return new Blob(this.ot,{jt:this.ut.it})}}]),c}();return function(t){function n(){return r(this,n),s(this,(n.__proto__||Object.getPrototypeOf(n)).apply(this,arguments))}return o(n,d),n}()});
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.WaveBell = factory());
+}(this, (function () { 'use strict';
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+function slice(args, from) {
+  return Array.prototype.slice.call(args, from);
+}
+
+var Emitter = function () {
+  function Emitter() {
+    classCallCheck(this, Emitter);
+
+    this.handlerMap = {};
+  }
+
+  createClass(Emitter, [{
+    key: 'on',
+    value: function on(event, handler) {
+      if (typeof event !== 'string') {
+        throw new TypeError(event + ' is not a string');
+      }
+      if (typeof handler !== 'function') {
+        throw new TypeError(handler + ' is not a function');
+      }
+      var map = this.handlerMap;
+      var handlers = map[event] = map[event] || [];
+      var i = handlers.indexOf(handler);
+      if (i === -1) {
+        handlers.push(handler);
+      }
+      return this;
+    }
+  }, {
+    key: 'off',
+    value: function off(event, handler) {
+      if (handler === undefined) {
+        // remove all handlers
+        delete this.handlerMap[event];
+        return this;
+      }
+      // remove registered handler
+      var handlers = this.handlerMap[event];
+      if (handlers) {
+        var i = handlers.indexOf(handler);
+        if (i >= 0) {
+          handlers.splice(i, 1);
+        }
+        // cleanup empty handlers
+        if (handlers.length === 0) {
+          this.off(event);
+        }
+      }
+      return this;
+    }
+  }, {
+    key: 'emit',
+    value: function emit(event) {
+      var args = slice(arguments, 1);
+      var handlers = this.handlerMap[event];
+      if (handlers) {
+        for (var i = 0, len = handlers.length; i < len; i++) {
+          handlers[i].apply(undefined, args);
+        }
+      }
+      return this;
+    }
+  }]);
+  return Emitter;
+}();
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+var Assertion = function () {
+  function Assertion(value) {
+    classCallCheck(this, Assertion);
+
+    this.value = value;
+    this._negative = false;
+    this._error = new Error('Assertion failed');
+  }
+
+  createClass(Assertion, [{
+    key: 'that',
+    value: function that(error) {
+      this._error = error;
+      return this;
+    }
+  }, {
+    key: 'equal',
+    value: function equal(value) {
+      if (value === this.value === this._negative) {
+        throw this._error;
+      }
+    }
+  }, {
+    key: 'to',
+    get: function get$$1() {
+      return this;
+    }
+  }, {
+    key: 'not',
+    get: function get$$1() {
+      this._negative = !this._negative;
+      return this;
+    }
+  }]);
+  return Assertion;
+}();
+
+function assert(value) {
+  return new Assertion(value);
+}
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+// AudioContext singleton shared by filters
+var audioContext = null;
+
+var AudioFilter = function () {
+  function AudioFilter() {
+    classCallCheck(this, AudioFilter);
+  }
+
+  createClass(AudioFilter, [{
+    key: "context",
+
+    /**
+     * Get AudioContext instance
+     * @returns {AudioContext} - Shared instance
+     */
+    get: function get$$1() {
+      if (!audioContext) {
+        audioContext = new AudioContext();
+      }
+      return audioContext;
+    }
+  }]);
+  return AudioFilter;
+}();
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+var VolumeMeter = function (_AudioFilter) {
+  inherits(VolumeMeter, _AudioFilter);
+
+  function VolumeMeter(mainbus, options) {
+    classCallCheck(this, VolumeMeter);
+
+    var _this = possibleConstructorReturn(this, (VolumeMeter.__proto__ || Object.getPrototypeOf(VolumeMeter)).call(this));
+
+    _this.mainbus = mainbus;
+    _this.options = options || {
+      fftSize: 2048,
+      smoothingTimeConstant: 0.3
+    };
+    _this.source = null;
+    _this.analyser = _this.init(_this.options);
+    return _this;
+  }
+
+  createClass(VolumeMeter, [{
+    key: 'init',
+    value: function init(options) {
+      var _this2 = this;
+
+      // init analyser from options
+      /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+      var analyser = this.context.createAnalyser();
+      analyser.fftSize = options.fftSize;
+      analyser.smoothingTimeConstant = options.smoothingTimeConstant;
+
+      // use auto buffer size and only 1 I/O channel
+      /// ref: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createScriptProcessor
+      var processor = this.context.createScriptProcessor(0, 1, 1);
+      processor.onaudioprocess = function (e) {
+        if (_this2.mainbus.state === 'recording') {
+          _this2._processData(e);
+        }
+      };
+
+      // connect processing pipeline
+      /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
+      analyser.connect(processor);
+      processor.connect(this.context.destination);
+
+      return analyser;
+    }
+  }, {
+    key: 'pipe',
+    value: function pipe(stream) {
+      // connect source stream
+      this.source = this.context.createMediaStreamSource(stream);
+      this.source.connect(this.analyser);
+    }
+  }, {
+    key: 'cutoff',
+    value: function cutoff() {
+      this.source.disconnect(this.analyser);
+      this.source = null;
+    }
+  }, {
+    key: '_processData',
+    value: function _processData(e) {
+      // half of the fftSize
+      var data = new Uint8Array(this.analyser.frequencyBinCount);
+      this.analyser.getByteFrequencyData(data);
+      var value = this._calcAvgVolume(data);
+      this.mainbus.emit('wave', {
+        value: value
+      });
+    }
+  }, {
+    key: '_calcAvgVolume',
+    value: function _calcAvgVolume(data) {
+      var sum = 0;
+      var len = data.length;
+      for (var i = 0; i < len; i++) {
+        sum += data[i];
+      }
+      return sum / len;
+    }
+  }]);
+  return VolumeMeter;
+}(AudioFilter);
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+var hasOwn = Object.prototype.hasOwnProperty;
+
+var PropPath = function () {
+  function PropPath(path) {
+    classCallCheck(this, PropPath);
+
+    this.steps = path.split('.');
+    this.fallback = undefined;
+  }
+
+  createClass(PropPath, [{
+    key: 'travel',
+    value: function travel(target, fn) {
+      if (typeof fn !== 'function') {
+        throw new TypeError(fn + ' is not a function');
+      }
+      var len = this.steps.length;
+      var i = 0;
+      var step = this.steps[i];
+      while (fn(target, step) && i < len) {
+        target = target[step];
+        step = this.steps[++i];
+      }
+      return {
+        step: i,
+        value: target
+      };
+    }
+  }, {
+    key: 'or',
+    value: function or(defaultValue) {
+      this.fallback = defaultValue;
+      return this;
+    }
+  }, {
+    key: 'from',
+    value: function from(obj) {
+      var ret = this.travel(obj, function (target, step) {
+        return target != null && step in Object(target);
+      });
+      if (ret.step === this.steps.length) {
+        return ret.value;
+      } else {
+        return this.fallback;
+      }
+    }
+  }, {
+    key: 'hadBy',
+    value: function hadBy(obj) {
+      var ret = this.travel(obj, function (target, step) {
+        return target != null && step in Object(target);
+      });
+      return ret.step === this.steps.length;
+    }
+  }, {
+    key: 'ownedBy',
+    value: function ownedBy(obj) {
+      var ret = this.travel(obj, function (target, step) {
+        return target != null && hasOwn.call(target, step);
+      });
+      return ret.step === this.steps.length;
+    }
+  }]);
+  return PropPath;
+}();
+
+function props(path) {
+  if (typeof path !== 'string') {
+    throw new TypeError(path + ' is not a string');
+  }
+  return new PropPath(path);
+}
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+/**
+ * Shim for MediaDevices#getUserMedia method
+ * @param {object} constraints - The user media constraints
+ */
+function getUserMedia(constraints) {
+  if (props('navigator.mediaDevices.getUserMedia').hadBy(window)) {
+    var medias = props('navigator.mediaDevices').from(window);
+    return medias.getUserMedia(constraints);
+  }
+  var userMediaGetter = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+  if (!userMediaGetter) {
+    throw new Error('getUserMedia is not supported by this browser');
+  }
+  return new Promise(function (resolve, reject) {
+    userMediaGetter(constraints, resolve, reject);
+  });
+}
+
+/**
+ * Access audio input from microphone device
+ */
+function getUserMicrophone() {
+  return getUserMedia({ audio: true, video: false });
+}
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+function buildError(self, callee) {
+  return new Error('Failed to execute \'' + callee + '\' on \'Recorder\':\n' + ('The Recorder\'s state is \'' + self.state + '\'.'));
+}
+
+var Recorder = function (_Emitter) {
+  inherits(Recorder, _Emitter);
+
+  function Recorder(options) {
+    classCallCheck(this, Recorder);
+
+    var _this = possibleConstructorReturn(this, (Recorder.__proto__ || Object.getPrototypeOf(Recorder)).call(this));
+
+    _this.options = options || {
+      mimeType: 'audio/webm',
+      audioBitsPerSecond: 96000
+    };
+    _this._intern = null;
+    _this._result = null;
+    _this._filter = new VolumeMeter(_this);
+    return _this;
+  }
+
+  createClass(Recorder, [{
+    key: 'open',
+    value: function open() {
+      var _this2 = this;
+
+      return getUserMicrophone().then(function (stream) {
+        // create internal recorder
+        _this2._intern = new MediaRecorder(stream, _this2.options);
+        // register event listeners
+        var eventTypes = ['error', 'pause', 'resume', 'start', 'stop'];
+        eventTypes.map(function (type) {
+          _this2._intern.addEventListener(type, function (e) {
+            return _this2.emit(type, e);
+          });
+        });
+        _this2._intern.addEventListener('dataavailable', function (e) {
+          _this2._result.push(e.data);
+        });
+        // pipe stream to filter
+        _this2._filter.pipe(stream);
+      });
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this._filter.cutoff();
+      this._intern = null;
+      this._result = null;
+    }
+  }, {
+    key: 'start',
+    value: function start(timeslice) {
+      var _this3 = this;
+
+      assert(this.state).that(buildError(this, 'start')).to.equal('inactive');
+      // init result data on every start
+      this._result = [];
+      // use lazy open policy
+      if (!this.ready) {
+        this.open().then(function () {
+          _this3._intern.start(timeslice);
+        });
+      } else {
+        this._intern.start(timeslice);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      assert(this.state).that(buildError(this, 'stop')).to.not.equal('inactive');
+      this._intern.stop();
+    }
+  }, {
+    key: 'pause',
+    value: function pause() {
+      assert(this.state).that(buildError(this, 'pause')).to.equal('recording');
+      this._intern.pause();
+    }
+  }, {
+    key: 'resume',
+    value: function resume() {
+      assert(this.state).that(buildError(this, 'resume')).to.equal('paused');
+      this._intern.resume();
+    }
+  }, {
+    key: 'state',
+    get: function get$$1() {
+      if (this._intern === null) {
+        return 'inactive';
+      } else {
+        return this._intern.state;
+      }
+    }
+  }, {
+    key: 'ready',
+    get: function get$$1() {
+      return this._intern !== null;
+    }
+  }, {
+    key: 'result',
+    get: function get$$1() {
+      return new Blob(this._result, {
+        type: this._intern.mimeType
+      });
+    }
+  }]);
+  return Recorder;
+}(Emitter);
+
+/*
+ * Copyright (C) 2017, Skyler.
+ * Use of this source code is governed by the MIT license that can be
+ * found in the LICENSE file.
+ */
+
+var WaveBell = function (_Recorder) {
+  inherits(WaveBell, _Recorder);
+
+  function WaveBell() {
+    classCallCheck(this, WaveBell);
+    return possibleConstructorReturn(this, (WaveBell.__proto__ || Object.getPrototypeOf(WaveBell)).apply(this, arguments));
+  }
+
+  return WaveBell;
+}(Recorder);
+
+return WaveBell;
+
+})));
 //# sourceMappingURL=wavebell.js.map
