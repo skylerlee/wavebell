@@ -879,7 +879,7 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.11.0:
+commander@2.11.0, commander@~2.11.0:
   version "2.11.0"
   resolved "http://registry.npm.taobao.org/commander/download/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
@@ -2820,6 +2820,10 @@ source-map@^0.5.6:
   version "0.5.7"
   resolved "http://registry.npm.taobao.org/source-map/download/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
+source-map@~0.6.1:
+  version "0.6.1"
+  resolved "http://registry.npm.taobao.org/source-map/download/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+
 spdx-correct@~1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/spdx-correct/download/spdx-correct-1.0.2.tgz#4b3073d933ff51f3912f03ac5519498a4150db40"
@@ -3038,6 +3042,13 @@ type-detect@^4.0.0:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+uglify-js@^3.1.9:
+  version "3.1.9"
+  resolved "http://registry.npm.taobao.org/uglify-js/download/uglify-js-3.1.9.tgz#dffca799308cf327ec3ac77eeacb8e196ce3b452"
+  dependencies:
+    commander "~2.11.0"
+    source-map "~0.6.1"
 
 uid-number@^0.0.6:
   version "0.0.6"
