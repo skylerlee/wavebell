@@ -40,9 +40,15 @@ function getMinFileName (name) {
   return path.join(props.dir, minName)
 }
 
-export default function minify (input) {
+export default function minify (input, option = {}) {
   let minFile = getMinFileName(input)
   let mapFile = minFile + '.map'
+  if (option.sourceMap) {
+    defaultOptions.sourceMap = {
+      filename: path.basename(minFile),
+      url: path.basename(mapFile)
+    }
+  }
   return {
     name: 'minify',
     onwrite () {
@@ -50,7 +56,9 @@ export default function minify (input) {
         return uglify.minify(source, defaultOptions)
       }).then(minified => {
         writeFile(minFile, minified.code)
-        writeFile(mapFile, minified.map)
+        if (minified.map) {
+          writeFile(mapFile, minified.map)
+        }
       })
     }
   }

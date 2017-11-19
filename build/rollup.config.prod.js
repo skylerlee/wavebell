@@ -15,6 +15,8 @@ export default {
   plugins: [
     alias(),
     babel(),
-    minify(conf.dest)
+    minify(conf.dest, {
+      sourceMap: true
+    })
   ]
 }
