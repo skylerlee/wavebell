@@ -2,7 +2,6 @@
 
 import { alias } from './project.config'
 import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
 
 export default {
   input: './lib/wavebell.js',
@@ -14,9 +13,6 @@ export default {
   },
   plugins: [
     alias(),
-    babel(),
-    uglify({
-      mangle: { properties: true }
-    })
+    babel()
   ]
 }
