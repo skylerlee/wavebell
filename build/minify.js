@@ -28,11 +28,10 @@ function writeFile (file, data) {
   })
 }
 
-const options = {
+const defaultOptions = {
   output: {
     ascii_only: true
-  },
-  sourceMap: true
+  }
 }
 
 function getMinFileName (name) {
@@ -48,7 +47,7 @@ export default function minify (input) {
     name: 'minify',
     onwrite () {
       readFile(input).then(source => {
-        return uglify.minify(source, options)
+        return uglify.minify(source, defaultOptions)
       }).then(minified => {
         writeFile(minFile, minified.code)
         writeFile(mapFile, minified.map)
