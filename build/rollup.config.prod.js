@@ -1,6 +1,7 @@
 'use strict'
 
 import { conf, alias } from './project.config'
+import minify from './minify'
 import babel from 'rollup-plugin-babel'
 
 export default {
@@ -13,6 +14,7 @@ export default {
   },
   plugins: [
     alias(),
-    babel()
+    babel(),
+    minify(conf.dest)
   ]
 }
