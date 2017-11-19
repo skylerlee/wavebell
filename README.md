@@ -1,6 +1,7 @@
 # wavebell
 
 [![Build Status](https://travis-ci.org/skylerlee/wavebell.svg?branch=master)](https://travis-ci.org/skylerlee/wavebell)
+[![npm](https://img.shields.io/npm/v/wavebell.svg)](https://www.npmjs.com/package/wavebell)
 
 A web audio recorder with visual waveform.
 
