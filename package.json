@@ -15,8 +15,6 @@
     "lint:src": "eslint ./lib",
     "lint:spec": "coffeelint ./test",
     "build": "run-s lint:src build:prod",
-    "minify": "node build/minify.js",
-    "dist": "run-s build minify",
     "start": "live-server --open=/demo --watch=demo,dist",
     "test:clean": "rimraf ./test_gen",
     "test:launch": "node test/launch.js",
