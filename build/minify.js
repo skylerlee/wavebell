@@ -1,6 +1,7 @@
 'use strict'
 
 import * as fs from 'fs'
+import * as path from 'path'
 import * as uglify from 'uglify-js'
 
 function readFile (file) {
@@ -34,15 +35,21 @@ const options = {
   sourceMap: true
 }
 
+function getMinFileName (name) {
+  let props = path.parse(name)
+  let minName = props.name + '.min' + props.ext
+  return path.join(props.dir, minName)
+}
+
 export default function minify (input) {
+  let minFile = getMinFileName(input)
+  let mapFile = minFile + '.map'
   return {
     name: 'minify',
     onwrite () {
       readFile(input).then(source => {
         return uglify.minify(source, options)
       }).then(minified => {
-        let minFile = input + '.min.js'
-        let mapFile = input + '.map'
         writeFile(minFile, minified.code)
         writeFile(mapFile, minified.map)
       })
