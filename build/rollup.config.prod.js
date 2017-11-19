@@ -1,12 +1,12 @@
 'use strict'
 
-import { alias } from './project.config'
+import { conf, alias } from './project.config'
 import babel from 'rollup-plugin-babel'
 
 export default {
-  input: './lib/wavebell.js',
+  input: conf.main,
   output: {
-    file: './dist/wavebell.js',
+    file: conf.dest,
     name: 'WaveBell',
     format: 'umd',
     sourcemap: true
