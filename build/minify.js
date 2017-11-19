@@ -1,29 +1,51 @@
 'use strict'
 
-const fs = require('fs')
-const uglify = require('uglify-js')
+import * as fs from 'fs'
+import * as uglify from 'uglify-js'
 
-let input = './dist/wavebell.js'
-let output = './dist/wavebell.min.js'
-let mapfile = output + '.map'
-
-function minify () {
-  let code = fs.readFileSync(input, 'utf-8')
-  let minified = uglify.minify(code, {
-    output: {
-      ascii_only: true
-    },
-    sourceMap: {
-      filename: 'wavebell.min.js',
-      url: 'wavebell.min.js.map'
-    }
+function readFile (file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, 'utf-8', (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
   })
-  fs.writeFileSync(output, minified.code)
-  fs.writeFileSync(mapfile, minified.map)
 }
 
-module.export = minify
+function writeFile (file, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, data, (err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
 
-if (require.main === module) {
-  minify()
+const options = {
+  output: {
+    ascii_only: true
+  },
+  sourceMap: true
+}
+
+export default function minify (input) {
+  return {
+    name: 'minify',
+    onwrite () {
+      readFile(input).then(source => {
+        return uglify.minify(source, options)
+      }).then(minified => {
+        let minFile = input + '.min.js'
+        let mapFile = input + '.map'
+        writeFile(minFile, minified.code)
+        writeFile(mapFile, minified.map)
+      })
+    }
+  }
 }
