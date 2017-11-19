@@ -27,11 +27,14 @@ bell.on('stop', function () {
   var blob = bell.result;
   playback(URL.createObjectURL(blob));
 });
+
+// 25 frames per second
+bell.start(1000 / 25);
 ```
 
 ## Notice
 In Chrome 47 or above, `getUserMedia` requires HTTPS to work.
-So it'd be better to setup ssl for your server.
+So it'd be better to setup SSL for your server.
 
 ## Thanks
 * **Jos Dirksen** for his [great blog post about audio visualization](http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound)
