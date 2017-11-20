@@ -47,8 +47,7 @@
   });
 
   bell.on('wave', function (e) {
-    var volume = Math.min(e.value, 1);
-    rng.style.width = (volume * 100) + '%';
+    rng.style.width = (e.value * 100) + '%';
   });
 
   bell.on('start', function () {
