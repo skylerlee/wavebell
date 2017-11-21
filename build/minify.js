@@ -34,10 +34,10 @@ const defaultOptions = {
   }
 }
 
-function getMinFileName (name) {
-  let props = path.parse(name)
-  let minName = props.name + '.min' + props.ext
-  return path.join(props.dir, minName)
+function suffixed (name, suffix) {
+  let parts = path.parse(name)
+  let filename = parts.name + suffix + parts.ext
+  return path.join(parts.dir, filename)
 }
 
 function createFileWrap (name, content) {
@@ -54,7 +54,7 @@ function createFileWrap (name, content) {
  * @param {object} option - minify option
  */
 export default function minify (input, option = {}) {
-  let minFile = getMinFileName(input)
+  let minFile = suffixed(input, '.min')
   let mapFile = minFile + '.map'
   if (option.sourceMap) {
     defaultOptions.sourceMap = {
