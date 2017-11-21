@@ -1,3 +1,3 @@
 'use strict'
 
-require('./lib/wavebell')
+require('./dist/wavebell.cjs')

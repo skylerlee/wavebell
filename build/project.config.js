@@ -10,8 +10,8 @@ function suffixed (name, suffix) {
 }
 
 let conf = {
-  main: './lib/wavebell.js',
-  dest: './dist/wavebell.js'
+  main: 'lib/wavebell.js',
+  dest: 'dist/wavebell.js'
 }
 
 let alias = () => rollupAlias({
