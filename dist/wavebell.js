@@ -237,16 +237,26 @@ var VolumeMeter = function (_AudioFilter) {
     var _this = possibleConstructorReturn(this, (VolumeMeter.__proto__ || Object.getPrototypeOf(VolumeMeter)).call(this));
 
     _this.mainbus = mainbus;
-    _this.options = options || {
-      fftSize: 2048,
-      smoothingTimeConstant: 0.3
-    };
+    _this.options = Object.assign({
+      minLimit: 0,
+      maxLimit: 128,
+      fftSize: 1024,
+      smoothing: 0.3
+    }, options);
+    _this._checkOptions(_this.options);
     _this.source = null;
     _this.analyser = _this.init(_this.options);
     return _this;
   }
 
   createClass(VolumeMeter, [{
+    key: '_checkOptions',
+    value: function _checkOptions(options) {
+      if (options.maxLimit <= options.minLimit) {
+        throw new RangeError('Wrong limit range for volume');
+      }
+    }
+  }, {
     key: 'init',
     value: function init(options) {
       var _this2 = this;
@@ -255,7 +265,7 @@ var VolumeMeter = function (_AudioFilter) {
       /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
       var analyser = this.context.createAnalyser();
       analyser.fftSize = options.fftSize;
-      analyser.smoothingTimeConstant = options.smoothingTimeConstant;
+      analyser.smoothingTimeConstant = options.smoothing;
 
       // use auto buffer size and only 1 I/O channel
       /// ref: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createScriptProcessor
@@ -292,10 +302,22 @@ var VolumeMeter = function (_AudioFilter) {
       // half of the fftSize
       var data = new Uint8Array(this.analyser.frequencyBinCount);
       this.analyser.getByteFrequencyData(data);
-      var value = this._calcAvgVolume(data);
+      var volume = this._calcAvgVolume(data);
       this.mainbus.emit('wave', {
-        value: value
+        value: this._alignVolume(volume)
       });
+    }
+  }, {
+    key: '_alignVolume',
+    value: function _alignVolume(volume) {
+      var opts = this.options;
+      if (volume < opts.minLimit) {
+        volume = opts.minLimit;
+      }
+      if (volume > opts.maxLimit) {
+        volume = opts.maxLimit;
+      }
+      return (volume - opts.minLimit) / (opts.maxLimit - opts.minLimit);
     }
   }, {
     key: '_calcAvgVolume',
@@ -439,13 +461,13 @@ var Recorder = function (_Emitter) {
 
     var _this = possibleConstructorReturn(this, (Recorder.__proto__ || Object.getPrototypeOf(Recorder)).call(this));
 
-    _this.options = options || {
+    _this.options = Object.assign({
       mimeType: 'audio/webm',
       audioBitsPerSecond: 96000
-    };
+    }, options);
     _this._intern = null;
     _this._result = null;
-    _this._filter = new VolumeMeter(_this);
+    _this._filter = new VolumeMeter(_this, _this.options.meter);
     return _this;
   }
 
