@@ -9,6 +9,11 @@
   },
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist",
+    "lib",
+    "index.js"
+  ],
   "scripts": {
     "build:prod": "rollup -c build/rollup.config.prod.js",
     "build:test": "rollup -c build/rollup.config.test.js",
