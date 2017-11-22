@@ -1,6 +1,6 @@
 {
   "name": "wavebell",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A javascript voice recorder with realtime waveform",
   "main": "index.js",
   "repository": {
