@@ -2,7 +2,7 @@
   "name": "wavebell",
   "version": "0.1.2",
   "description": "A javascript voice recorder with realtime waveform",
-  "main": "index.js",
+  "main": "dist/wavebell.esm.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/skylerlee/wavebell.git"
@@ -11,8 +11,7 @@
   "license": "MIT",
   "files": [
     "dist",
-    "lib",
-    "index.js"
+    "lib"
   ],
   "scripts": {
     "build:prod": "rollup -c build/rollup.config.prod.js",
