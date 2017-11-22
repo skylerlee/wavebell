@@ -5,9 +5,9 @@ import { suffixed, conf, alias } from './project.config'
 export default {
   input: conf.main,
   output: {
-    file: suffixed(conf.dest, '.cjs'),
+    file: suffixed(conf.dest, '.esm'),
     name: 'WaveBell',
-    format: 'cjs',
+    format: 'es',
     sourcemap: true
   },
   plugins: [
