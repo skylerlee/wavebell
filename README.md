@@ -37,6 +37,7 @@ In Chrome 47 or above, `getUserMedia` requires HTTPS to work.
 So it'd be better to setup SSL for your server.
 
 ## Thanks
+* **Mozilla web docs** [visualizations with web audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Visualizations_with_Web_Audio_API)
 * **Jos Dirksen** for his [great blog post about audio visualization](http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound)
 
 ## License
