@@ -142,7 +142,7 @@ class VolumeMeter extends AudioFilter {
     }, options);
     this._checkOptions(this.options);
     this.source = null;
-    this.analyser = this.init(this.options);
+    this.analyser = this._initAnalyser(this.options);
   }
 
   _checkOptions (options) {
@@ -151,42 +151,31 @@ class VolumeMeter extends AudioFilter {
     }
   }
 
-  init (options) {
+  _initAnalyser (options) {
     // init analyser from options
     /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
     let analyser = this.context.createAnalyser();
     analyser.fftSize = options.fftSize;
     analyser.smoothingTimeConstant = options.smoothing;
-
-    // use auto buffer size and only 1 I/O channel
-    /// ref: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createScriptProcessor
-    let processor = this.context.createScriptProcessor(0, 1, 1);
-    processor.onaudioprocess = e => {
-      if (this.mainbus.state === 'recording') {
-        this._processData(e);
-      }
-    };
-
-    // connect processing pipeline
-    /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
-    analyser.connect(processor);
-    processor.connect(this.context.destination);
-
+    // process data when available
+    this.mainbus.on('dataavailable', e => this._processData());
     return analyser
   }
 
   pipe (stream) {
-    // connect source stream
+    // connect stream pipe
     this.source = this.context.createMediaStreamSource(stream);
     this.source.connect(this.analyser);
+    this.analyser.connect(this.context.destination);
   }
 
   cutoff () {
+    this.analyser.disconnect(this.context.destination);
     this.source.disconnect(this.analyser);
     this.source = null;
   }
 
-  _processData (e) {
+  _processData () {
     // half of the fftSize
     let data = new Uint8Array(this.analyser.frequencyBinCount);
     this.analyser.getByteFrequencyData(data);
@@ -326,9 +315,9 @@ function getUserMicrophone () {
  * found in the LICENSE file.
  */
 
-function buildError (self, callee) {
-  return new Error(`Failed to execute '${callee}' on 'Recorder':\n` +
-    `The Recorder's state is '${self.state}'.`)
+function buildError (callee, that) {
+  return new Error(`Failed to execute '${callee}' on 'Recorder'` +
+    (that ? `:\nThe Recorder's state is '${that.state}'.` : ''))
 }
 
 class Recorder extends Emitter {
@@ -356,12 +345,16 @@ class Recorder extends Emitter {
   }
 
   get result () {
+    if (!this._result) {
+      return null
+    }
     return new Blob(this._result, {
-      type: this._intern.mimeType
+      type: this.options.mimeType
     })
   }
 
   open () {
+    assert(this.ready).that(buildError('open')).to.equal(false);
     return getUserMicrophone().then(stream => {
       // create internal recorder
       this._intern = new MediaRecorder(stream, this.options);
@@ -372,6 +365,7 @@ class Recorder extends Emitter {
       });
       this._intern.addEventListener('dataavailable', e => {
         this._result.push(e.data);
+        this.emit('dataavailable', e);
       });
       // pipe stream to filter
       this._filter.pipe(stream);
@@ -379,13 +373,19 @@ class Recorder extends Emitter {
   }
 
   close () {
+    assert(this.ready).that(buildError('close')).to.equal(true);
+    // close all stream tracks
+    let tracks = this._intern.stream.getTracks();
+    for (let i = 0; i < tracks.length; i++) {
+      tracks[i].stop();
+    }
+    // close stream filter
     this._filter.cutoff();
     this._intern = null;
-    this._result = null;
   }
 
   start (timeslice) {
-    assert(this.state).that(buildError(this, 'start')).to.equal('inactive');
+    assert(this.state).that(buildError('start', this)).to.equal('inactive');
     // init result data on every start
     this._result = [];
     // use lazy open policy
@@ -399,17 +399,17 @@ class Recorder extends Emitter {
   }
 
   stop () {
-    assert(this.state).that(buildError(this, 'stop')).to.not.equal('inactive');
+    assert(this.state).that(buildError('stop', this)).to.not.equal('inactive');
     this._intern.stop();
   }
 
   pause () {
-    assert(this.state).that(buildError(this, 'pause')).to.equal('recording');
+    assert(this.state).that(buildError('pause', this)).to.equal('recording');
     this._intern.pause();
   }
 
   resume () {
-    assert(this.state).that(buildError(this, 'resume')).to.equal('paused');
+    assert(this.state).that(buildError('resume', this)).to.equal('paused');
     this._intern.resume();
   }
 }

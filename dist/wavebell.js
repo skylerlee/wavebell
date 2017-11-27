@@ -245,7 +245,7 @@ var VolumeMeter = function (_AudioFilter) {
     }, options);
     _this._checkOptions(_this.options);
     _this.source = null;
-    _this.analyser = _this.init(_this.options);
+    _this.analyser = _this._initAnalyser(_this.options);
     return _this;
   }
 
@@ -257,8 +257,8 @@ var VolumeMeter = function (_AudioFilter) {
       }
     }
   }, {
-    key: 'init',
-    value: function init(options) {
+    key: '_initAnalyser',
+    value: function _initAnalyser(options) {
       var _this2 = this;
 
       // init analyser from options
@@ -266,39 +266,30 @@ var VolumeMeter = function (_AudioFilter) {
       var analyser = this.context.createAnalyser();
       analyser.fftSize = options.fftSize;
       analyser.smoothingTimeConstant = options.smoothing;
-
-      // use auto buffer size and only 1 I/O channel
-      /// ref: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createScriptProcessor
-      var processor = this.context.createScriptProcessor(0, 1, 1);
-      processor.onaudioprocess = function (e) {
-        if (_this2.mainbus.state === 'recording') {
-          _this2._processData(e);
-        }
-      };
-
-      // connect processing pipeline
-      /// ref: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
-      analyser.connect(processor);
-      processor.connect(this.context.destination);
-
+      // process data when available
+      this.mainbus.on('dataavailable', function (e) {
+        return _this2._processData();
+      });
       return analyser;
     }
   }, {
     key: 'pipe',
     value: function pipe(stream) {
-      // connect source stream
+      // connect stream pipe
       this.source = this.context.createMediaStreamSource(stream);
       this.source.connect(this.analyser);
+      this.analyser.connect(this.context.destination);
     }
   }, {
     key: 'cutoff',
     value: function cutoff() {
+      this.analyser.disconnect(this.context.destination);
       this.source.disconnect(this.analyser);
       this.source = null;
     }
   }, {
     key: '_processData',
-    value: function _processData(e) {
+    value: function _processData() {
       // half of the fftSize
       var data = new Uint8Array(this.analyser.frequencyBinCount);
       this.analyser.getByteFrequencyData(data);
@@ -449,8 +440,8 @@ function getUserMicrophone() {
  * found in the LICENSE file.
  */
 
-function buildError(self, callee) {
-  return new Error('Failed to execute \'' + callee + '\' on \'Recorder\':\n' + ('The Recorder\'s state is \'' + self.state + '\'.'));
+function buildError(callee, that) {
+  return new Error('Failed to execute \'' + callee + '\' on \'Recorder\'' + (that ? ':\nThe Recorder\'s state is \'' + that.state + '\'.' : ''));
 }
 
 var Recorder = function (_Emitter) {
@@ -476,6 +467,7 @@ var Recorder = function (_Emitter) {
     value: function open() {
       var _this2 = this;
 
+      assert(this.ready).that(buildError('open')).to.equal(false);
       return getUserMicrophone().then(function (stream) {
         // create internal recorder
         _this2._intern = new MediaRecorder(stream, _this2.options);
@@ -488,6 +480,7 @@ var Recorder = function (_Emitter) {
         });
         _this2._intern.addEventListener('dataavailable', function (e) {
           _this2._result.push(e.data);
+          _this2.emit('dataavailable', e);
         });
         // pipe stream to filter
         _this2._filter.pipe(stream);
@@ -496,16 +489,22 @@ var Recorder = function (_Emitter) {
   }, {
     key: 'close',
     value: function close() {
+      assert(this.ready).that(buildError('close')).to.equal(true);
+      // close all stream tracks
+      var tracks = this._intern.stream.getTracks();
+      for (var i = 0; i < tracks.length; i++) {
+        tracks[i].stop();
+      }
+      // close stream filter
       this._filter.cutoff();
       this._intern = null;
-      this._result = null;
     }
   }, {
     key: 'start',
     value: function start(timeslice) {
       var _this3 = this;
 
-      assert(this.state).that(buildError(this, 'start')).to.equal('inactive');
+      assert(this.state).that(buildError('start', this)).to.equal('inactive');
       // init result data on every start
       this._result = [];
       // use lazy open policy
@@ -520,19 +519,19 @@ var Recorder = function (_Emitter) {
   }, {
     key: 'stop',
     value: function stop() {
-      assert(this.state).that(buildError(this, 'stop')).to.not.equal('inactive');
+      assert(this.state).that(buildError('stop', this)).to.not.equal('inactive');
       this._intern.stop();
     }
   }, {
     key: 'pause',
     value: function pause() {
-      assert(this.state).that(buildError(this, 'pause')).to.equal('recording');
+      assert(this.state).that(buildError('pause', this)).to.equal('recording');
       this._intern.pause();
     }
   }, {
     key: 'resume',
     value: function resume() {
-      assert(this.state).that(buildError(this, 'resume')).to.equal('paused');
+      assert(this.state).that(buildError('resume', this)).to.equal('paused');
       this._intern.resume();
     }
   }, {
@@ -552,8 +551,11 @@ var Recorder = function (_Emitter) {
   }, {
     key: 'result',
     get: function get$$1() {
+      if (!this._result) {
+        return null;
+      }
       return new Blob(this._result, {
-        type: this._intern.mimeType
+        type: this.options.mimeType
       });
     }
   }]);
