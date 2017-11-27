@@ -244,6 +244,7 @@ var VolumeMeter = function (_AudioFilter) {
       smoothing: 0.3
     }, options);
     _this._checkOptions(_this.options);
+    _this._cache = null;
     _this.source = null;
     _this.analyser = _this._initAnalyser(_this.options);
     return _this;
@@ -278,12 +279,10 @@ var VolumeMeter = function (_AudioFilter) {
       // connect stream pipe
       this.source = this.context.createMediaStreamSource(stream);
       this.source.connect(this.analyser);
-      this.analyser.connect(this.context.destination);
     }
   }, {
     key: 'cutoff',
     value: function cutoff() {
-      this.analyser.disconnect(this.context.destination);
       this.source.disconnect(this.analyser);
       this.source = null;
     }
@@ -291,9 +290,11 @@ var VolumeMeter = function (_AudioFilter) {
     key: '_processData',
     value: function _processData() {
       // half of the fftSize
-      var data = new Uint8Array(this.analyser.frequencyBinCount);
-      this.analyser.getByteFrequencyData(data);
-      var volume = this._calcAvgVolume(data);
+      if (!this._cache) {
+        this._cache = new Uint8Array(this.analyser.frequencyBinCount);
+      }
+      this.analyser.getByteFrequencyData(this._cache);
+      var volume = this._calcAvgVolume(this._cache);
       this.mainbus.emit('wave', {
         value: this._alignVolume(volume)
       });
