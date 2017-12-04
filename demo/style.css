@@ -23,6 +23,10 @@ body {
   outline: none;
 }
 
+.label {
+  margin: 0 1em;
+}
+
 .range-bar {
   box-sizing: border-box;
   width: 500px;
