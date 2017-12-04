@@ -37,6 +37,15 @@ body {
   border: 1px solid #ccc;
 }
 .range-bar .range {
-  height: 4px;
-  background-color: #6c4;
+  height: 32px;
+  background-image: linear-gradient(
+    90deg,
+    #6c4 45%,
+    transparent 45%,
+    transparent 50%,
+    #6c4 50%,
+    #6c4 95%,
+    transparent 95%,
+    transparent);
+  background-size: 40px 40px;
 }
