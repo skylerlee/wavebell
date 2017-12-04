@@ -1,0 +1,19 @@
+/**
+ * Demo page stylesheet
+ */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #3c4242;
+  color: #f0f0f0;
+}
+
+.btn {
+  background-color: #ccc;
+  color: #000;
+  min-width: 6em;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+}
