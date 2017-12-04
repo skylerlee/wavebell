@@ -8,7 +8,7 @@
 <body>
   <div class="container">
     <h3>Click button to start record</h3>
-    <button id="btn">Start</button>
+    <button class="btn" id="btn">Start</button>
     <span id="txt"></span>
     <div class="range-bar">
       <div class="range" id="rng"></div>
@@ -16,11 +16,11 @@
   </div>
   <script src="/dist/wavebell.js"></script>
   <script>
-  var bell = new WaveBell();
-
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
   var txt = document.getElementById('txt');
+
+  var bell = new WaveBell();
 
   btn.addEventListener('click', function (e) {
     if (bell.state === 'inactive') {
