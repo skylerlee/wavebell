@@ -8,6 +8,11 @@ body {
   color: #f0f0f0;
 }
 
+.container {
+  width: 500px;
+  margin: 5em auto;
+}
+
 .btn {
   background-color: #ccc;
   color: #000;
@@ -16,4 +21,16 @@ body {
   border: none;
   border-radius: 3px;
   outline: none;
+}
+
+.range-bar {
+  box-sizing: border-box;
+  width: 500px;
+  padding: 2px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+}
+.range-bar .range {
+  height: 4px;
+  background-color: #6c4;
 }
