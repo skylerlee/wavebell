@@ -20,11 +20,13 @@ yarn add wavebell
 var bell = new WaveBell();
 
 bell.on('wave', function (e) {
+  // draw oscilloscope
   drawColumn(e.value);
 });
 
 bell.on('stop', function () {
   var blob = bell.result;
+  // play recorded audio
   playback(URL.createObjectURL(blob));
 });
 
