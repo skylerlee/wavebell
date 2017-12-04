@@ -5,6 +5,9 @@
 
 Catch realtime audio wave from microphone with JavaScript!
 
+## Screenshot
+![wavebell](https://user-images.githubusercontent.com/6789491/33554578-3d9067de-d938-11e7-8946-4dd6870d4495.gif)
+
 ## Installation
 
 ```bash
