@@ -2,8 +2,17 @@
 
 import { alias } from './project.config'
 import multiEntry from 'rollup-plugin-multi-entry'
+import replace from 'rollup-plugin-replace'
 import coffee from 'rollup-plugin-coffee-script'
 import babel from 'rollup-plugin-babel'
+import istanbul from 'rollup-plugin-istanbul'
+
+const replaceConfig = {
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+}
+const istanbulConfig = {
+  exclude: ['./test/**/*']
+}
 
 export default {
   input: [
@@ -19,7 +28,9 @@ export default {
   plugins: [
     multiEntry(),
     alias(),
+    replace(replaceConfig),
     coffee(),
-    babel()
+    babel(),
+    istanbul(istanbulConfig)
   ]
 }

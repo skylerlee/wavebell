@@ -2,7 +2,13 @@
 'use strict'
 
 const ws = require('ws')
+const fs = require('fs-extra')
+const path = require('path')
 const launcher = require('chrome-launcher')
+
+const TESTING_MODE = process.env.NODE_ENV === 'testing'
+const PROJECT_ROOT = path.resolve(__dirname, '..')
+const NYC_OUTPUT = path.join(PROJECT_ROOT, '.nyc_output')
 
 // chrome launcher options
 let chromeOpts = {
@@ -16,9 +22,6 @@ let server = new ws.Server({
 
 let browser = {
   inst: null,
-  get silent () {
-    return process.env.NODE_ENV === 'testing'
-  },
   open () {
     launcher.launch(chromeOpts).then(chrome => {
       // promise not resolve in headless mode
@@ -26,7 +29,7 @@ let browser = {
     })
   },
   close () {
-    if (this.silent) {
+    if (TESTING_MODE) {
       this.inst.kill()
     }
     this.inst = null
@@ -43,6 +46,9 @@ let handler = {
       slot.call(this, msg)
     })
   },
+  log (msg) {
+    console.log.apply(console, msg.data)
+  },
   destroy () {
     let delay = 1000
     setTimeout(() => {
@@ -52,7 +58,16 @@ let handler = {
       }
     }, delay)
   },
+  report (output) {
+    fs.ensureDir(NYC_OUTPUT).then(() => {
+      let covFile = path.join(NYC_OUTPUT, 'coverage.json')
+      fs.writeJson(covFile, output)
+    })
+  },
   done (msg) {
+    if (msg.coverage) {
+      this.report(msg.coverage)
+    }
     if (msg.failures > 0) {
       process.exitCode = 1
     }

@@ -1,32 +1,8 @@
 'use strict'
 
-import * as fs from 'fs'
-import * as path from 'path'
-import * as uglify from 'uglify-js'
-
-function readFile (file) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, 'utf-8', (err, data) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
-}
-
-function writeFile (file, data) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(file, data, (err) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
-}
+import fs from 'fs-extra'
+import path from 'path'
+import uglify from 'uglify-js'
 
 const defaultOptions = {
   output: {
@@ -66,13 +42,13 @@ export default function minify (input, option = {}) {
     name: 'minify',
     // hook onwrite phase
     onwrite () {
-      readFile(input).then(source => {
+      fs.read(input).then(source => {
         let file = createFileWrap(path.basename(input), source)
         return uglify.minify(file, defaultOptions)
       }).then(minified => {
-        writeFile(minFile, minified.code)
+        fs.write(minFile, minified.code)
         if (minified.map) {
-          writeFile(mapFile, minified.map)
+          fs.write(mapFile, minified.map)
         }
       })
     }

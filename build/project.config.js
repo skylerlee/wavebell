@@ -1,6 +1,6 @@
 'use strict'
 
-import * as path from 'path'
+import path from 'path'
 import rollupAlias from 'rollup-plugin-alias'
 
 function suffixed (name, suffix) {
