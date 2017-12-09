@@ -46,6 +46,9 @@ let handler = {
       slot.call(this, msg)
     })
   },
+  log (msg) {
+    console.log.apply(console, msg.data)
+  },
   destroy () {
     let delay = 1000
     setTimeout(() => {
