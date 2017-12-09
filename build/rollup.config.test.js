@@ -7,6 +7,13 @@ import coffee from 'rollup-plugin-coffee-script'
 import babel from 'rollup-plugin-babel'
 import istanbul from 'rollup-plugin-istanbul'
 
+const replaceConfig = {
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+}
+const istanbulConfig = {
+  exclude: ['./test/**/*']
+}
+
 export default {
   input: [
     './test/bootstrap.js',
@@ -21,13 +28,9 @@ export default {
   plugins: [
     multiEntry(),
     alias(),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
+    replace(replaceConfig),
     coffee(),
     babel(),
-    istanbul({
-      exclude: ['./test/**/*']
-    })
+    istanbul(istanbulConfig)
   ]
 }
