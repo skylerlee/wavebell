@@ -22,6 +22,8 @@ export default {
     alias(),
     coffee(),
     babel(),
-    istanbul()
+    istanbul({
+      exclude: ['./test/**/*']
+    })
   ]
 }
