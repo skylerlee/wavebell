@@ -2,7 +2,12 @@
 'use strict'
 
 const ws = require('ws')
+const fs = require('fs-extra')
+const path = require('path')
 const launcher = require('chrome-launcher')
+
+const PROJECT_ROOT = path.resolve(__dirname, '..')
+const NYC_OUTPUT = path.join(PROJECT_ROOT, '.nyc_output')
 
 // chrome launcher options
 let chromeOpts = {
@@ -53,6 +58,10 @@ let handler = {
     }, delay)
   },
   done (msg) {
+    if (msg.coverage) {
+      let covFile = path.join(NYC_OUTPUT, 'coverage.json')
+      fs.writeJson(covFile, msg.coverage)
+    }
     if (msg.failures > 0) {
       process.exitCode = 1
     }

@@ -4,6 +4,7 @@ import { alias } from './project.config'
 import multiEntry from 'rollup-plugin-multi-entry'
 import coffee from 'rollup-plugin-coffee-script'
 import babel from 'rollup-plugin-babel'
+import istanbul from 'rollup-plugin-istanbul'
 
 export default {
   input: [
@@ -20,6 +21,7 @@ export default {
     multiEntry(),
     alias(),
     coffee(),
-    babel()
+    babel(),
+    istanbul()
   ]
 }

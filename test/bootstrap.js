@@ -23,7 +23,8 @@ function register (mocha) {
     runner.on('end', () => {
       socket.send({
         type: 'done',
-        failures: runner.failures
+        failures: runner.failures,
+        coverage: window.__coverage__
       })
     })
   })
