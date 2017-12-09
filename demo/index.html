@@ -3,40 +3,24 @@
 <head>
   <meta charset="utf-8">
   <title>WaveBell Demo</title>
-  <style>
-  .container {
-    width: 500px;
-    margin: 50px auto;
-  }
-  .range-bar {
-    box-sizing: border-box;
-    width: 500px;
-    padding: 2px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-  }
-  .range-bar .range {
-    height: 4px;
-    background-color: #6c4;
-  }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h3>Click button to start record</h3>
-    <button id="btn">Start</button>
-    <span id="txt"></span>
+    <h2>Click button to start recorder</h2>
+    <button class="btn" id="btn">Start</button>
+    <span class="label" id="txt"></span>
     <div class="range-bar">
       <div class="range" id="rng"></div>
     </div>
   </div>
   <script src="/dist/wavebell.js"></script>
   <script>
-  var bell = new WaveBell();
-
   var btn = document.getElementById('btn');
   var rng = document.getElementById('rng');
   var txt = document.getElementById('txt');
+
+  var bell = new WaveBell();
 
   btn.addEventListener('click', function (e) {
     if (bell.state === 'inactive') {
@@ -57,6 +41,7 @@
   bell.on('stop', function () {
     btn.innerText = 'Start';
     txt.innerText = 'Have fun!';
+    console.log(URL.createObjectURL(bell.result));
   });
   </script>
 </body>
