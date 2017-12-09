@@ -1,9 +1,13 @@
 # wavebell
 
 [![Build Status](https://travis-ci.org/skylerlee/wavebell.svg?branch=master)](https://travis-ci.org/skylerlee/wavebell)
+[![Coverage Status](https://coveralls.io/repos/github/skylerlee/wavebell/badge.svg?branch=master)](https://coveralls.io/github/skylerlee/wavebell)
 [![npm](https://img.shields.io/npm/v/wavebell.svg)](https://www.npmjs.com/package/wavebell)
 
-A web audio recorder with visual waveform.
+Catch realtime audio wave from microphone with JavaScript!
+
+## Screenshot
+![wavebell](https://user-images.githubusercontent.com/6789491/33554578-3d9067de-d938-11e7-8946-4dd6870d4495.gif)
 
 ## Installation
 
@@ -20,11 +24,13 @@ yarn add wavebell
 var bell = new WaveBell();
 
 bell.on('wave', function (e) {
+  // draw oscilloscope
   drawColumn(e.value);
 });
 
 bell.on('stop', function () {
   var blob = bell.result;
+  // play recorded audio
   playback(URL.createObjectURL(blob));
 });
 

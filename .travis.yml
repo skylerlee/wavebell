@@ -20,3 +20,5 @@ before_script:
   - sleep 3 # wait for xvfb to boot
 script:
   - yarn run test
+after_success:
+  - yarn run coverage
