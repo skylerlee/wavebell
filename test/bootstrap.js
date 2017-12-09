@@ -14,10 +14,27 @@ WebSocket.prototype.send = function (msg) {
   origSend.call(this, msg)
 }
 
+function redirect (socket) {
+  console.log = function () {
+    let msg = Array.prototype.slice.call(arguments, 0)
+    socket.send({
+      type: 'log',
+      data: msg
+    })
+  }
+}
+
 function register (mocha) {
   // establish connection
   let socket = new WebSocket('ws://localhost:9020')
   socket.addEventListener('open', () => {
+    if (process.env.NODE_ENV === 'testing') {
+      redirect(socket)
+      // use spec reporter
+      mocha.setup({
+        reporter: 'spec'
+      })
+    }
     // start runner
     let runner = mocha.run()
     runner.on('end', () => {
