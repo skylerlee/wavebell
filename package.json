@@ -25,7 +25,8 @@
     "start": "live-server --open=/demo --watch=demo,dist",
     "test:clean": "rimraf ./test_gen",
     "test:launch": "node test/launch.js",
-    "test": "run-s test:clean lint:spec build:test test:launch"
+    "test": "run-s test:clean lint:spec build:test test:launch",
+    "coverage": "nyc report"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
