@@ -1,8 +1,8 @@
 'use strict'
 
-import * as fs from 'fs'
-import * as path from 'path'
-import * as uglify from 'uglify-js'
+import fs from 'fs'
+import path from 'path'
+import uglify from 'uglify-js'
 
 function readFile (file) {
   return new Promise((resolve, reject) => {
