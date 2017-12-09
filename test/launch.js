@@ -6,6 +6,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const launcher = require('chrome-launcher')
 
+const TESTING_MODE = process.env.NODE_ENV === 'testing'
 const PROJECT_ROOT = path.resolve(__dirname, '..')
 const NYC_OUTPUT = path.join(PROJECT_ROOT, '.nyc_output')
 
@@ -21,9 +22,6 @@ let server = new ws.Server({
 
 let browser = {
   inst: null,
-  get silent () {
-    return process.env.NODE_ENV === 'testing'
-  },
   open () {
     launcher.launch(chromeOpts).then(chrome => {
       // promise not resolve in headless mode
@@ -31,7 +29,7 @@ let browser = {
     })
   },
   close () {
-    if (this.silent) {
+    if (TESTING_MODE) {
       this.inst.kill()
     }
     this.inst = null
