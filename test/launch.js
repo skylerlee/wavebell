@@ -57,10 +57,15 @@ let handler = {
       }
     }, delay)
   },
+  report (output) {
+    fs.ensureDir(NYC_OUTPUT).then(() => {
+      let covFile = path.join(NYC_OUTPUT, 'coverage.json')
+      fs.writeJson(covFile, output)
+    })
+  },
   done (msg) {
     if (msg.coverage) {
-      let covFile = path.join(NYC_OUTPUT, 'coverage.json')
-      fs.writeJson(covFile, msg.coverage)
+      this.report(msg.coverage)
     }
     if (msg.failures > 0) {
       process.exitCode = 1
