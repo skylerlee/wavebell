@@ -33,13 +33,39 @@
     }
   });
 
+  var volume = 0;
+
   bell.on('wave', function (e) {
+    volume = e.value;
   });
 
   bell.on('start', function () {
+    requestAnimationFrame(drawFrame);
   });
   bell.on('stop', function () {
   });
+
+  function drawFrame () {
+    requestAnimationFrame(drawFrame);
+    ctx.save();
+    // empty canvas
+    ctx.clearRect(0, 0, 500, 300);
+    // draw audio waveform
+    var x = 100;
+    var h = 250 * volume;
+    ctx.beginPath();
+    ctx.moveTo(x, 150 - 0.5 * h);
+    ctx.lineTo(x, 150 + 0.5 * h);
+    ctx.strokeStyle = '#6c4';
+    ctx.stroke();
+    // draw middle line
+    ctx.beginPath();
+    ctx.moveTo(0, 150.5);
+    ctx.lineTo(500, 150.5);
+    ctx.strokeStyle = '#000';
+    ctx.stroke();
+    ctx.restore();
+  }
   </script>
 </body>
 </html>
