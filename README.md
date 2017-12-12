@@ -8,6 +8,7 @@ Catch realtime audio wave from microphone with JavaScript!
 
 ## Screenshot
 ![wavebell](https://user-images.githubusercontent.com/6789491/33554578-3d9067de-d938-11e7-8946-4dd6870d4495.gif)
+![waveform](https://user-images.githubusercontent.com/6789491/33908149-63942ce6-dfc2-11e7-94ca-a2023943a9ab.gif)
 
 ## Installation
 
