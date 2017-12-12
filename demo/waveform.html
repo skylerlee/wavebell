@@ -10,6 +10,27 @@
   <canvas id="cvs"></canvas>
   <script src="/dist/wavebell.js"></script>
   <script>
+  var btn = document.getElementById('btn');
+  var cvs = document.getElementById('cvs');
+  var ctx = cvs.getContext('2d');
+
+  var bell = new WaveBell();
+
+  btn.addEventListener('click', function (e) {
+    if (bell.state === 'inactive') {
+      bell.start(1000 / 25);
+    } else {
+      bell.stop();
+    }
+  });
+
+  bell.on('wave', function (e) {
+  });
+
+  bell.on('start', function () {
+  });
+  bell.on('stop', function () {
+  });
   </script>
 </body>
 </html>
