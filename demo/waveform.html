@@ -33,10 +33,12 @@
     }
   });
 
-  var volume = 0;
+  var BUF_SIZE = 500;
+  var buffer = new Array(BUF_SIZE).fill(0);
+  var cursor = 0;
 
   bell.on('wave', function (e) {
-    volume = e.value;
+    buffer[cursor++ % BUF_SIZE] = e.value;
   });
 
   bell.on('start', function () {
@@ -51,13 +53,15 @@
     // empty canvas
     ctx.clearRect(0, 0, 500, 300);
     // draw audio waveform
-    var x = 100;
-    var h = 250 * volume;
-    ctx.beginPath();
-    ctx.moveTo(x, 150 - 0.5 * h);
-    ctx.lineTo(x, 150 + 0.5 * h);
-    ctx.strokeStyle = '#6c4';
-    ctx.stroke();
+    for (var i = 1; i <= BUF_SIZE; i++) {
+      var x = (cursor + i) % BUF_SIZE;
+      var h = 250 * buffer[x];
+      ctx.beginPath();
+      ctx.moveTo(x, 150 - 0.5 * h);
+      ctx.lineTo(x, 150 + 0.5 * h);
+      ctx.strokeStyle = '#6c4';
+      ctx.stroke();
+    }
     // draw middle line
     ctx.beginPath();
     ctx.moveTo(0, 150.5);
