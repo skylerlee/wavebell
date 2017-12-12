@@ -33,6 +33,11 @@
     }
   });
 
+  window.addEventListener('load', function (e) {
+    // start animation on loaded
+    animate();
+  });
+
   var currentValue = 0;
 
   // buffered wave data
@@ -45,9 +50,6 @@
     currentValue = e.value;
   });
 
-  bell.on('start', function () {
-    requestAnimationFrame(drawFrame);
-  });
   bell.on('stop', function () {
     currentValue = 0;
   });
@@ -58,12 +60,9 @@
   }
 
   function drawFrame () {
-    requestAnimationFrame(drawFrame);
     ctx.save();
     // empty canvas
     ctx.clearRect(0, 0, 500, 300);
-    // update wave data
-    updateBuffer();
     // draw audio waveform
     ctx.strokeStyle = '#6c4';
     for (var i = 0; i < BUF_SIZE; i++) {
@@ -81,6 +80,14 @@
     ctx.strokeStyle = '#000';
     ctx.stroke();
     ctx.restore();
+  }
+
+  function animate () {
+    requestAnimationFrame(animate);
+    // update wave data
+    updateBuffer();
+    // draw next frame
+    drawFrame();
   }
   </script>
 </body>
