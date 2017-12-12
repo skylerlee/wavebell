@@ -33,12 +33,16 @@
     }
   });
 
+  var currentValue = 0;
+
+  // buffered wave data
   var BUF_SIZE = 500;
   var buffer = new Array(BUF_SIZE).fill(0);
   var cursor = 0;
 
   bell.on('wave', function (e) {
-    buffer[cursor++ % BUF_SIZE] = e.value;
+    // update current wave value
+    currentValue = e.value;
   });
 
   bell.on('start', function () {
@@ -47,19 +51,26 @@
   bell.on('stop', function () {
   });
 
+  function updateBuffer () {
+    // loop update buffered data
+    buffer[cursor++ % BUF_SIZE] = currentValue;
+  }
+
   function drawFrame () {
     requestAnimationFrame(drawFrame);
     ctx.save();
     // empty canvas
     ctx.clearRect(0, 0, 500, 300);
+    // update wave data
+    updateBuffer();
     // draw audio waveform
+    ctx.strokeStyle = '#6c4';
     for (var i = 1; i <= BUF_SIZE; i++) {
-      var x = (cursor + i) % BUF_SIZE;
-      var h = 250 * buffer[x];
+      var h = 250 * buffer[(cursor + i) % BUF_SIZE];
+      var x = i;
       ctx.beginPath();
       ctx.moveTo(x, 150 - 0.5 * h);
       ctx.lineTo(x, 150 + 0.5 * h);
-      ctx.strokeStyle = '#6c4';
       ctx.stroke();
     }
     // draw middle line
