@@ -65,12 +65,12 @@
     updateBuffer();
     // draw audio waveform
     ctx.strokeStyle = '#6c4';
-    for (var i = 1; i <= BUF_SIZE; i++) {
+    for (var i = 0; i < BUF_SIZE; i++) {
       var h = 250 * buffer[(cursor + i) % BUF_SIZE];
       var x = i;
       ctx.beginPath();
-      ctx.moveTo(x, 150 - 0.5 * h);
-      ctx.lineTo(x, 150 + 0.5 * h);
+      ctx.moveTo(x, 150.5 - 0.5 * h);
+      ctx.lineTo(x, 150.5 + 0.5 * h);
       ctx.stroke();
     }
     // draw middle line
