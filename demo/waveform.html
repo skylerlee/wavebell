@@ -50,7 +50,11 @@
     currentValue = e.value;
   });
 
+  bell.on('start', function () {
+    btn.innerText = 'Stop';
+  });
   bell.on('stop', function () {
+    btn.innerText = 'Start';
     currentValue = 0;
   });
 
