@@ -4,10 +4,19 @@
   <meta charset="utf-8">
   <title>WaveBell Demo</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+  .screen {
+    display: block;
+    margin: 0 auto;
+  }
+  </style>
 </head>
 <body>
-  <button class="btn" id="btn">Start</button>
-  <canvas id="cvs"></canvas>
+  <div class="container">
+    <h2>Draw audio waveform</h2>
+    <button class="btn" id="btn">Start</button>
+    <canvas class="screen" width="500" height="300" id="cvs"></canvas>
+  </div>
   <script src="/dist/wavebell.js"></script>
   <script>
   var btn = document.getElementById('btn');
