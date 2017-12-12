@@ -49,6 +49,7 @@
     requestAnimationFrame(drawFrame);
   });
   bell.on('stop', function () {
+    currentValue = 0;
   });
 
   function updateBuffer () {
